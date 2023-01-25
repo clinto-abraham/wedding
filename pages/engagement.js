@@ -1,21 +1,36 @@
-import clientPromise from "../lib/mongodb";
+import clientPromise from '@/lib/mongodb';
 import { ImageList, ImageListItem, Typography, Container } from '@mui/material'
+import { useSelector } from 'react-redux';
+
 
 export default function Engagement({ engage }) {
+    const { pics } = useSelector(state => state.uploads)
+    console.log(pics)
     return (
         <Container>
             <Container sx={{ width: 1200, height: 1450, overflowY: 'scroll', padding: '100px', margin: '20px' }}>
-                <Typography variant="h3">{`Wedding`}</Typography>
+                <Typography variant="h3">{`Engagement Day`}</Typography>
 
                 <ImageList variant="masonry" cols={3} gap={8}>
-                    {engage.map((pic) => (
+                    {/* {engage.map((pic) => (
                         <ImageListItem key={pic._id} onClick={() => console.log("clicked image list")}>
                             <img
-                                src={`${pic.link}?w=248&fit=crop&auto=format`}
-                                srcSet={`${pic.link}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                src={`${pic.base64}?w=248&fit=crop&auto=format`}
+                                srcSet={`${pic.base64}?w=248&fit=crop&auto=format&dpr=2 2x`}
                                 alt={pic?.title}
                                 loading="lazy"
                                 key={pic._id}
+                            />
+                        </ImageListItem>
+                    ))} */}
+                    {pics.map((pic, index) => (
+                        <ImageListItem key={index} onClick={() => console.log("clicked image list")}>
+                            <img
+                                src={`${pic}?w=248&fit=crop&auto=format`}
+                                srcSet={`${pic}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                alt={pic ? pic.slice(3) : 'some-pic'}
+                                loading="lazy"
+                                key={index}
                             />
                         </ImageListItem>
                     ))}
@@ -38,7 +53,7 @@ export async function getServerSideProps() {
         const db = client.db('photo');
 
         const pics = await db
-            .collection('url')
+            .collection('engage')
             .find({})
             .sort({ metacritic: -1 })
             .limit(10)

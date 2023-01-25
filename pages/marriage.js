@@ -1,4 +1,6 @@
-import clientPromise from "../lib/mongodb";
+// import clientPromise from "../lib/mongodb";
+
+import clientPromise from "@/lib/mongodb";
 
 export default function Marriage({ marry }) {
     return (

@@ -1,4 +1,5 @@
 //  Controller 
+import clientPromise from '@/lib/mongodb'
 import FilesEngage from '../model/engageSchema'
 import FilesMarriage from '../model/marriageSchema'
 
@@ -28,14 +29,33 @@ export async function getMarriageFiles(req, res) {
 
 // post : http://localhost:3000/api/engage-pics
 export async function postEngageFiles(req, res) {
+    // try {
+    //     const formData = req.body;
+    //     if (!formData) return res.status(404).json({ error: "Form Data Not Provided...!" });
+    //     FilesEngage.create(formData, function (err, data) {
+    //         return res.status(200).json(data)
+    //     })
+    // } catch (error) {
+    //     return res.status(404).json({ error })
+    // }
     try {
-        const formData = req.body;
-        if (!formData) return res.status(404).json({ error: "Form Data Not Provided...!" });
-        FilesEngage.create(formData, function (err, data) {
-            return res.status(200).json(data)
-        })
-    } catch (error) {
-        return res.status(404).json({ error })
+        const client = await clientPromise;
+        const db = client.db('photo');
+        console.log(req, res)
+        const pics = await db
+            .collection('engage')
+            .insertOne(req.body)
+            .then((err, data) => res.status(200).json(data))
+        // .find({})
+        // .sort({ metacritic: -1 })
+        // .limit(10)
+        // .toArray();
+
+        return {
+            data: { engage: JSON.parse(JSON.stringify(pics)) },
+        };
+    } catch (e) {
+        console.error(e);
     }
 }
 

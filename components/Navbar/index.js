@@ -1,23 +1,16 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
+import { useSelector } from 'react-redux';
+import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+import Link from 'next/link'
 import styles from '@/styles/Home.module.css'
+import { useRouter } from 'next/router';
 
-const pages = ['Status', 'Contact', 'Blog'];
 const settings = ['Profile', 'Message', 'Dashboard', 'Logout'];
 
 const TopNavbar = () => {
+    const router = useRouter()
+    const { photoTilesTypes } = useSelector(state => state.uploads)
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -28,8 +21,12 @@ const TopNavbar = () => {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseNavMenu = () => {
+    const handleCloseNavMenu = (page) => {
         setAnchorElNav(null);
+        if (page) {
+            router.push(page)
+        }
+
     };
 
     const handleCloseUserMenu = () => {
@@ -37,7 +34,7 @@ const TopNavbar = () => {
     };
 
     return (
-        <AppBar position="static" color='transparent'>
+        <AppBar position="static" color='transparent' sx={{ padding: '1rem', margin: '2rem' }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Typography
@@ -59,7 +56,7 @@ const TopNavbar = () => {
                         Clinto & Chippy
                     </Typography>
                     <Typography
-                        variant="h6"
+                        variant="h3"
                         noWrap
                         component="a"
                         href="/"
@@ -105,7 +102,7 @@ const TopNavbar = () => {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {pages.map((page) => (
+                            {photoTilesTypes.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">{page}</Typography>
                                 </MenuItem>
@@ -132,10 +129,10 @@ const TopNavbar = () => {
                         Clinto & Chippy
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
+                        {photoTilesTypes.map((page) => (
                             <Button
                                 key={page}
-                                onClick={handleCloseNavMenu}
+                                onClick={() => handleCloseNavMenu(page)}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
                                 {page}

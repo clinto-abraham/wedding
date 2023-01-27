@@ -11,7 +11,7 @@ const initialState = {
 }
 
 export const uploadSlice = createSlice({
-    name: 'utils',
+    name: 'uploads',
     initialState,
     reducers: {
         registerEngagementUploadsFromFirebase: (state, action) => {

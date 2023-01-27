@@ -4,26 +4,17 @@ import { useSelector } from 'react-redux';
 
 
 export default function Engagement({ engage }) {
-    const { pics } = useSelector(state => state.uploads)
-    console.log(pics)
+    const { engagement } = useSelector(state => state.uploads)
+    console.log(engagement)
+
     return (
         <Container>
             <Container sx={{ width: 1200, height: 1450, overflowY: 'scroll', padding: '100px', margin: '20px' }}>
                 <Typography variant="h3">{`Engagement Day`}</Typography>
 
                 <ImageList variant="masonry" cols={3} gap={8}>
-                    {/* {engage.map((pic) => (
-                        <ImageListItem key={pic._id} onClick={() => console.log("clicked image list")}>
-                            <img
-                                src={`${pic.base64}?w=248&fit=crop&auto=format`}
-                                srcSet={`${pic.base64}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                alt={pic?.title}
-                                loading="lazy"
-                                key={pic._id}
-                            />
-                        </ImageListItem>
-                    ))} */}
-                    {pics.map((pic, index) => (
+
+                    {engagement.map((pic, index) => (
                         <ImageListItem key={index} onClick={() => console.log("clicked image list")}>
                             <img
                                 src={`${pic}?w=248&fit=crop&auto=format`}

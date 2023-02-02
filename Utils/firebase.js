@@ -31,4 +31,14 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-export const storage = getStorage(app);
+const storage = getStorage(app);
+// Enable Firestore Cache
+// storage.firestore()
+//     .enablePersistence()
+//     .catch((err) => {
+//         console.error(err);
+//     });
+
+
+
+export default storage;

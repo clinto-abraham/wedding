@@ -5,9 +5,7 @@ import '@/styles/globals.css'
 import '@/styles/NotFound.css'
 import TopNavbar from '@/components/Navbar';
 import { FooterNavbar } from '@/components/Footer';
-// import FooterNavbar from '@/components/Footer';
-// import FooterNavbar from '@/components/Footer';
-// create a client
+
 const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }) {
@@ -23,7 +21,3 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp;
-
-// export default function App({ Component, pageProps }) {
-//   return <Component {...pageProps} />
-// }

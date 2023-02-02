@@ -5,7 +5,7 @@ import { Header } from '@/components/Header'
 import PhotoTilesNavbar from '@/components/PhotoTiles';
 import { useSelector, useDispatch } from 'react-redux'
 import Logo from '@/components/Logo';
-import storage from "@/Utils/firebase";
+import { storage } from "@/Utils/firebase";
 import {
   registerEngagementUploadsFromFirebase,
   registerPreWeddingUploadsFromFirebase,

@@ -5,6 +5,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Link from 'next/link'
 import { useRouter } from 'next/router';
 import Logo from '../Logo';
+import { getCurrentUser } from '@/Utils/firebase';
 
 const settings = ['profile', 'message', 'upload', 'logout'];
 
@@ -13,7 +14,9 @@ const TopNavbar = () => {
     const { photoTilesTypes } = useSelector(state => state.uploads)
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const user = async () => await getCurrentUser();
 
+    console.log(user().email, 'user')
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };

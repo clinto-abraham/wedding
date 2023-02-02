@@ -13,7 +13,6 @@ export const FooterNavbar = () => {
     const [date, setDate] = useState(2022)
     useEffect(() => {
         setDate(dateCheck.getFullYear())
-        console.log(date)
     }, [date])
 
 

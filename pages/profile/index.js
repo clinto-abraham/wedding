@@ -1,16 +1,34 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button, CircularProgress } from "@mui/material";
 import { signInWithGooglePopup } from '@/Utils/firebase';
+import { useAuth } from '@/hooks/useAuth';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '@/redux/loginSlice';
 
 const Login = () => {
+    const dispatch = useDispatch();
+    const loggedUser = useAuth();
+    const { user } = useSelector(state => state.user)
     const [loading, setLoading] = useState(false);
     // const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
     const handleGoogleSignIn = () => {
         setLoading(true);
         signInWithGooglePopup();
-        setLoading(false)
     };
+
+    useEffect(() => {
+        console.log(loggedUser, 'loggerUser at sign in')
+        dispatch(registerUser(loggedUser))
+    }, [loggedUser])
+
+    useEffect(() => {
+
+        if (user) {
+            setLoading(false)
+        } else console.log(user)
+    }, [user])
+
     return (
         <div>
             <Button

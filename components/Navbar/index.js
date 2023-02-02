@@ -1,35 +1,35 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
-import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
+import { Icon, AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import LockPersonIcon from '@mui/icons-material/LockPerson';
 import Link from 'next/link'
 import { useRouter } from 'next/router';
-import Logo from '../Logo';
-import { getCurrentUser } from '@/Utils/firebase';
+// import { getCurrentUser } from '@/Utils/firebase';
 
-const settings = ['profile', 'message', 'upload', 'logout'];
+const settings = ['profile', 'message', 'logout'];
 
 const TopNavbar = () => {
     const router = useRouter()
     const { photoTilesTypes } = useSelector(state => state.uploads)
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-    const user = async () => await getCurrentUser();
+    const { user } = useSelector(state => state.user)
+    console.log(user, 'user at Navbar', user?.isAnonymous, 'user?.isAnonymous')
 
-    console.log(user().email, 'user')
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
-    const handleOpenUserMenu = (event) => {
+    const handleOpenUserMenu = (event, page) => {
         setAnchorElUser(event.currentTarget);
-    };
 
-    const handleCloseNavMenu = (page) => {
-        setAnchorElNav(null);
         if (page) {
             router.push(page)
         }
+    };
 
+    const handleCloseNavMenu = () => {
+        setAnchorElNav(null);
     };
 
     const handleCloseUserMenu = () => {
@@ -90,9 +90,17 @@ const TopNavbar = () => {
                             }}
                         >
                             {photoTilesTypes.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                                <MenuItem
+                                    key={page}
+                                    onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">
-                                        <Link href={page}>{page.toUpperCase()}</Link></Typography>
+                                        <Link href={page}>{page.toUpperCase()}</Link>
+                                    </Typography>
+                                    {/* <Typography textAlign="center">
+                                    <Link href={user?.isAnonymous ? 'profile' : 'upload'}>
+                                        UPLOAD
+                                    </Link>
+                                </Typography> */}
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -132,8 +140,8 @@ const TopNavbar = () => {
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 <Avatar
-                                    alt="Clinto Abraham"
-                                // src="@/public/next.svg"
+                                    alt={user?.displayName || 'Clinto'}
+                                    src={user?.photoURL}
                                 />
                             </IconButton>
                         </Tooltip>
@@ -151,16 +159,32 @@ const TopNavbar = () => {
                                 horizontal: 'right',
                             }}
                             open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
+                        // onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                                <MenuItem key={setting}>
                                     <Typography textAlign="center">
-                                        <Link href={setting}>
+                                        <Link href={setting} onClick={(e) => handleCloseUserMenu(e, setting)}>
                                             {setting.toUpperCase()}
-                                        </Link></Typography>
+                                        </Link>
+                                    </Typography>
+
                                 </MenuItem>
+
                             ))}
+                            <MenuItem>
+                                <Typography textAlign="center">
+                                    <Link href={'upload'} onClick={handleCloseUserMenu}>
+                                        UPLOAD
+                                        {!user || user?.isAnonymous ? (
+                                            <Icon color='secondary'>
+                                                <LockPersonIcon />
+                                            </Icon>
+                                        ) : null}
+
+                                    </Link>
+                                </Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
                 </Toolbar>

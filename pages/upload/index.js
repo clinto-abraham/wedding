@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     ref,
     uploadBytes,
@@ -13,12 +13,21 @@ import { registerImageUploadBase } from "@/redux/uploadSlice";
 import { FileUploader } from "react-drag-drop-files";
 import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
+import { useRouter } from "next/router";
 
 function FirebaseUpload() {
     const { imageUploadBase, photoTilesTypes, fileTypes } = useSelector(state => state.uploads)
     // const [imageUrls, setImageUrls] = useState([]);
     const [file, setFile] = useState(null);
     const dispatch = useDispatch();
+    const { user } = useSelector(state => state.user)
+    const router = useRouter();
+
+    useEffect(() => {
+        if (!user || user?.isAnonymous) {
+            router.push('/')
+        }
+    }, [user])
 
     const handleUpload = (type) => {
         if (file?.name) {

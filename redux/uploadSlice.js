@@ -7,7 +7,11 @@ const initialState = {
     postWedding: [],
     photoTilesTypes: ['engagement', 'pre-wedding', 'marriage', 'post-wedding'],
     imageUploadBase: [],
-    fileTypes: ['JPG', 'PNG', 'GIF']
+    fileTypes: ['JPG', 'PNG', 'GIF'],
+    tilePreWedding: '',
+    tileEngagement: '',
+    tileMarriage: '',
+    tilePostWedding: '',
 }
 
 export const uploadSlice = createSlice({
@@ -34,6 +38,19 @@ export const uploadSlice = createSlice({
             // state.imageUploadBase = [];
             state.imageUploadBase = action.payload;
         },
+        registerTilePreWedding: (state, action) => {
+            state.tilePreWedding = action.payload;
+        },
+        registerTileEngagement: (state, action) => {
+            state.tileEngagement = action.payload;
+        },
+        registerTileMarriage: (state, action) => {
+            state.tileMarriage = action.payload;
+        },
+        registerTilePostWedding: (state, action) => {
+            state.tilePostWedding = action.payload;
+        },
+
     }
 })
 
@@ -42,8 +59,11 @@ export const {
     registerPreWeddingUploadsFromFirebase,
     registerMarriageUploadsFromFirebase,
     registerPostWeddingUploadsFromFirebase,
-    registerImageUploadBase
-
+    registerImageUploadBase,
+    registerTilePreWedding,
+    registerTileEngagement,
+    registerTileMarriage,
+    registerTilePostWedding
 } = uploadSlice.actions
 
 export default uploadSlice.reducer;

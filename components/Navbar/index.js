@@ -3,17 +3,20 @@ import { useSelector } from 'react-redux';
 import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Link from 'next/link'
-import styles from '@/styles/Home.module.css'
 import { useRouter } from 'next/router';
+import Logo from '../Logo';
+import { getCurrentUser } from '@/Utils/firebase';
 
-const settings = ['Profile', 'Message', 'Dashboard', 'Logout'];
+const settings = ['profile', 'message', 'upload', 'logout'];
 
 const TopNavbar = () => {
     const router = useRouter()
     const { photoTilesTypes } = useSelector(state => state.uploads)
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const user = async () => await getCurrentUser();
 
+    console.log(user().email, 'user')
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -37,40 +40,24 @@ const TopNavbar = () => {
         <AppBar position="static" color='transparent' sx={{ padding: '1rem', margin: '2rem' }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
+
                     <Typography
-                        variant="h6"
+                        variant="h2"
                         noWrap
-                        component="a"
-                        href="/"
-                        className={styles.thirteen}
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
                             fontFamily: 'monospace',
                             fontWeight: 700,
-                            letterSpacing: '.3rem',
+                            letterSpacing: '.5rem',
                             color: 'inherit',
                             textDecoration: 'none',
                         }}
                     >
-                        Clinto & Chippy
-                    </Typography>
-                    <Typography
-                        variant="h3"
-                        noWrap
-                        component="a"
-                        href="/"
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        Clinto & Chippy
+                        <Link href='/'>
+                            Clinto & Chippy
+                        </Link>
+
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -104,7 +91,8 @@ const TopNavbar = () => {
                         >
                             {photoTilesTypes.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                                    <Typography textAlign="center">
+                                        <Link href={page}>{page.toUpperCase()}</Link></Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -113,8 +101,6 @@ const TopNavbar = () => {
                     <Typography
                         variant="h5"
                         noWrap
-                        component="a"
-                        href=""
                         sx={{
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },
@@ -126,7 +112,9 @@ const TopNavbar = () => {
                             textDecoration: 'none',
                         }}
                     >
-                        Clinto & Chippy
+                        <Link href='/'>
+                            Clinto & Chippy
+                        </Link>
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {photoTilesTypes.map((page) => (
@@ -140,7 +128,7 @@ const TopNavbar = () => {
                         ))}
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }}>
+                    <Box sx={{ flexGrow: 1.5 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 <Avatar
@@ -167,7 +155,10 @@ const TopNavbar = () => {
                         >
                             {settings.map((setting) => (
                                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
+                                    <Typography textAlign="center">
+                                        <Link href={setting}>
+                                            {setting.toUpperCase()}
+                                        </Link></Typography>
                                 </MenuItem>
                             ))}
                         </Menu>

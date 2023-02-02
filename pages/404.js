@@ -7,13 +7,10 @@ import Link from 'next/link';
 export default function NotFound() {
     const dispatch = useDispatch();
     const router = useRouter();
-
     const { seconds, pushURL } = useSelector(state => state.utils);
-    console.log('Checking re-rendering')
 
     useEffect(() => {
         const interval = setInterval(() => dispatch(registerSeconds(seconds - 1)), 1000);
-
         return () => {
             clearInterval(interval);
         };

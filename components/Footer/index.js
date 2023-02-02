@@ -6,9 +6,11 @@ import { Box, BottomNavigation, BottomNavigationAction, Grid, Typography, } from
 import RestoreIcon from '@mui/icons-material/Restore';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { useRouter } from 'next/router';
 // import Logo from '../Logo';
 const dateCheck = new Date()
 export const FooterNavbar = () => {
+    const router = useRouter();
     const [value, setValue] = useState(0);
     const [date, setDate] = useState(2022)
     useEffect(() => {
@@ -28,9 +30,9 @@ export const FooterNavbar = () => {
                     sx={{ backgroundColor: 'transparent', color: 'white' }}
                 >
 
-                    <BottomNavigationAction label="Recents" icon={<RestoreIcon />} sx={{ color: 'white' }} />
+                    <BottomNavigationAction onClick={() => router.push('privacy-policy')} label="Privacy & Policy" icon={<RestoreIcon />} sx={{ color: 'white' }} />
                     <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} sx={{ color: 'white' }} />
-                    <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} sx={{ color: 'white' }} />
+                    <BottomNavigationAction onClick={() => router.push('terms-of-service')} label="Terms of service" icon={<LocationOnIcon />} sx={{ color: 'white' }} />
                 </BottomNavigation>
                 <Box sx={{ width: '100%', margin: '2px 500px' }}>
                     <Grid item xs={4}>

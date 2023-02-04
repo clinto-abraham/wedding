@@ -1,22 +1,50 @@
 import { useEffect, useState } from 'react'
-import { Button, CircularProgress } from "@mui/material";
-import { signInWithGooglePopup, signInWithGoogleRedirect } from '@/Utils/firebase';
+import { Button, CircularProgress, Typography, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, IconButton, Paper } from "@mui/material";
+import {
+    signInWithGooglePopup,
+    // signInWithGoogleRedirect 
+} from '@/Utils/firebase';
 import { useAuth } from '@/hooks/useAuth';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '@/redux/loginSlice';
 import { initialLocalState } from '@/Utils/userInitialData';
-import { useRouter } from 'next/router';
+import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
+import AttachEmailIcon from '@mui/icons-material/AttachEmail';
+import { styled } from '@mui/material/styles';
+import { red } from '@mui/material/colors';
+import MailLockIcon from '@mui/icons-material/MailLock';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { Box } from '@mui/system';
+import WordOfGod from '@/components/QuotesWordOfGod';
 
-const Login = () => {
+const ExpandMore = styled((props) => {
+    const { expand, ...other } = props;
+    return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shortest,
+    }),
+}));
+
+
+const Profile = () => {
     const dispatch = useDispatch();
     const userInfo = useAuth();
-    const router = useRouter();
     const { user: { isAnonymous } } = useSelector(state => state.user)
     const [loading, setLoading] = useState(false);
     const handleGoogleSignIn = () => {
         setLoading(true);
         signInWithGooglePopup();
         // signInWithGoogleRedirect();
+    };
+
+    const [expanded, setExpanded] = useState(false);
+
+    const handleExpandClick = () => {
+        setExpanded(!expanded);
     };
 
     useEffect(() => {
@@ -35,7 +63,6 @@ const Login = () => {
                 tenantId: userInfo?.tenantId,
                 uid: userInfo?.uid
             }))
-            router.push('/upload')
         }
     }, [userInfo?.isAnonymous])
 
@@ -46,31 +73,111 @@ const Login = () => {
     }, [isAnonymous])
 
     return (
-        <div>
-            <Button
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                type="button"
-                onClick={handleGoogleSignIn}
-                disabled={!isAnonymous}
-            >
-                <img
-                    width="40"
-                    height="40"
-                    src={
-                        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2048px-Google_%22G%22_Logo.svg.png"
+        <Box >
+            <Card sx={{ minWidth: 445, maxWidth: 445, margin: '5rem 10rem' }}>
+                <CardHeader
+                    avatar={
+                        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                            {userInfo?.displayName.slice(0, 1)}
+                        </Avatar>
                     }
-                    alt="Google"
+                    action={
+                        <IconButton aria-label="settings">
+                            <MoreVertIcon />
+                        </IconButton>
+                    }
+                    title={userInfo?.displayName}
+                    subheader={userInfo?.emailVerified ? 'Verified' : 'Not verified'}
                 />
-                {loading ? (
-                    <CircularProgress color="inherit" />
-                ) : (" Sign In with Google"
-                )
-                }
-            </Button>
-        </div>
+                <CardMedia
+                    component="img"
+                    height='500'
+                    image={userInfo?.photoURL}
+                    alt={userInfo?.displayName}
+                />
+                <CardContent>
+                    <WordOfGod
+                        color='text.secondary'
+                        size='0rem'
+                    />
+                    <Typography variant="body2" color="text.secondary">
+                        <MailLockIcon /> :
+                        {userInfo?.email}
+                    </Typography>
+                </CardContent>
+                <CardActions disableSpacing>
+                    <IconButton aria-label="add to favorites">
+                        <PhoneAndroidIcon /> {userInfo?.phoneNumber}
+                    </IconButton>
+                    <IconButton aria-label="share">
+                        <AttachEmailIcon />
+                    </IconButton>
+                    <ExpandMore
+                        expand={expanded}
+                        onClick={handleExpandClick}
+                        aria-expanded={expanded}
+                        aria-label="show more"
+                    >
+                        <ExpandMoreIcon />
+                    </ExpandMore>
+                </CardActions>
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardContent>
+                        <Typography paragraph>Method:</Typography>
+                        <Typography paragraph>
+                            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set
+                            aside for 10 minutes.
+                        </Typography>
+                        <Typography paragraph>
+                            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over
+                            medium-high heat. Add chicken, shrimp and chorizo, and cook, stirring
+                            occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp to a
+                            large plate and set aside, leaving chicken and chorizo in the pan. Add
+                            pimentón, bay leaves, garlic, tomatoes, onion, salt and pepper, and cook,
+                            stirring often until thickened and fragrant, about 10 minutes. Add
+                            saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
+                        </Typography>
+                        <Typography paragraph>
+                            Add rice and stir very gently to distribute. Top with artichokes and
+                            peppers, and cook without stirring, until most of the liquid is absorbed,
+                            15 to 18 minutes. Reduce heat to medium-low, add reserved shrimp and
+                            mussels, tucking them down into the rice, and cook again without
+                            stirring, until mussels have opened and rice is just tender, 5 to 7
+                            minutes more. (Discard any mussels that don&apos;t open.)
+                        </Typography>
+                        <Typography>
+                            Set aside off of the heat to let rest for 10 minutes, and then serve.
+                        </Typography>
+                    </CardContent>
+                </Collapse>
+            </Card>
+            <Paper elevation={23} sx={{ backgroundColor: 'transparent', margin: '1rem 3rem' }}>
+                <Button
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    type="button"
+                    onClick={handleGoogleSignIn}
+                    disabled={!isAnonymous}
+                >
+                    <img
+                        width="40"
+                        height="40"
+                        src={
+                            "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2048px-Google_%22G%22_Logo.svg.png"
+                        }
+                        alt="Google"
+                    />
+                    {loading ? (
+                        <CircularProgress color="inherit" />
+                    ) : (" Sign In with Google"
+                    )
+                    }
+                </Button>
+            </Paper>
+
+        </Box>
     )
 }
 
-export default Login
+export default Profile

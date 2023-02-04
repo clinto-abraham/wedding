@@ -1,9 +1,5 @@
 import { useEffect } from 'react';
-// import dynamic from 'next/dynamic'
-// import { Skeleton } from '@mui/material';
 import styles from '@/styles/Home.module.css'
-
-// import clientPromise from '../lib/mongodb'
 import { Header } from '@/components/Header'
 import { useSelector, useDispatch } from 'react-redux'
 import { storage } from "@/Utils/firebase";
@@ -26,18 +22,6 @@ import Logo from '@/components/Logo';
 import PhotoTilesNavbar from '@/components/PhotoTiles';
 
 const imageRefs = (props) => ref(storage, `images/${props}`);
-
-// const DynamicLogo = dynamic(() => import('@/components/Logo'), {
-//   loading: () => <Skeleton />,
-// })
-
-// const DynamicPhotoTilesNavbar = dynamic(() => import('@/components/PhotoTiles'), {
-//   loading: () => (<>
-//     <Skeleton variant="rectangular" width={210} height={118} />
-//     <Skeleton />
-//     <Skeleton width="60%" />
-//   </>),
-// })
 
 export default function Home() {
   const { photoTilesTypes } = useSelector(state => state.uploads)
@@ -71,7 +55,6 @@ export default function Home() {
   }
 
   useEffect(() => {
-    localStorage.clear()
     fetchPhotos(imageRefs(photoTilesTypes[0]));
     fetchPhotos(imageRefs(photoTilesTypes[1]));
     fetchPhotos(imageRefs(photoTilesTypes[2]));
@@ -122,3 +105,15 @@ export default function Home() {
 //     }
 //   }
 // }
+
+// const DynamicLogo = dynamic(() => import('@/components/Logo'), {
+//   loading: () => <Skeleton />,
+// })
+
+// const DynamicPhotoTilesNavbar = dynamic(() => import('@/components/PhotoTiles'), {
+//   loading: () => (<>
+//     <Skeleton variant="rectangular" width={210} height={118} />
+//     <Skeleton />
+//     <Skeleton width="60%" />
+//   </>),
+// })

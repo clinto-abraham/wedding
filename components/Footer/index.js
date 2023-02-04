@@ -7,31 +7,32 @@ import RestoreIcon from '@mui/icons-material/Restore';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { useRouter } from 'next/router';
+import { registerColor, registerSelected } from '@/redux/utilsSlice';
+import { useDispatch, useSelector } from 'react-redux';
 // import Logo from '../Logo';
 const dateCheck = new Date()
-export const FooterNavbar = () => {
+
+const FooterNavbar = () => {
     const router = useRouter();
-    const [value, setValue] = useState(0);
+    const dispatch = useDispatch()
+    // const [value, setValue] = useState(0);
+    const { selected } = useSelector(state => state.utils)
     const [date, setDate] = useState(2022)
     useEffect(() => {
         setDate(dateCheck.getFullYear())
-    }, [date])
-
+    }, [date]);
 
     return (
         <>
             <Box sx={{ width: '100%' }}>
                 <BottomNavigation
                     showLabels
-                    value={value}
-                    onChange={(event, newValue) => {
-                        setValue(newValue);
-                    }}
+                    // value={value}
+                    // onChange={(event, newValue) => setValue(newValue)}
                     sx={{ backgroundColor: 'transparent', color: 'white' }}
                 >
-
                     <BottomNavigationAction onClick={() => router.push('privacy-policy')} label="Privacy & Policy" icon={<RestoreIcon />} sx={{ color: 'white' }} />
-                    <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} sx={{ color: 'white' }} />
+                    <BottomNavigationAction onClick={() => dispatch(registerSelected(!selected))} label="Favorites" icon={<FavoriteIcon />} sx={{ color: selected ? 'red' : 'white' }} />
                     <BottomNavigationAction onClick={() => router.push('terms-of-service')} label="Terms of service" icon={<LocationOnIcon />} sx={{ color: 'white' }} />
                 </BottomNavigation>
                 <Box sx={{ width: '100%', margin: '2px 500px' }}>
@@ -51,8 +52,8 @@ export const FooterNavbar = () => {
                     <Grid item xs={4} />
                 </Box>
             </Box>
-
-
         </>
     )
 }
+
+export default FooterNavbar;

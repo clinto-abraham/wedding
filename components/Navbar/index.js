@@ -5,9 +5,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import LockPersonIcon from '@mui/icons-material/LockPerson';
 import Link from 'next/link'
 import { useRouter } from 'next/router';
-// import { getCurrentUser } from '@/Utils/firebase';
-
-const settings = ['profile', 'message', 'logout'];
+import SignIn from '../SignIn';
 
 const TopNavbar = () => {
     const router = useRouter()
@@ -15,27 +13,37 @@ const TopNavbar = () => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const { user } = useSelector(state => state.user)
-    console.log(user, 'user at Navbar', user?.isAnonymous, 'user?.isAnonymous')
+    console.log('re-rendering')
+
+    const handlePageNavigation = page => {
+        router.push(page)
+    };
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
-    const handleOpenUserMenu = (event, page) => {
+
+    const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
-
-        if (page) {
-            router.push(page)
-        }
     };
 
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
-
-    const handleCloseUserMenu = () => {
+    const handleClose = () => {
         setAnchorElUser(null);
     };
 
+    const handleDropDownSelect = (page) => {
+
+        setAnchorElUser(null);
+        if (page) {
+            router.push(page)
+        }
+    }
+    const handleUpload = () => {
+        if (user && !user.isAnonymous) {
+            router.push('/upload')
+        }
+        setAnchorElUser(null);
+    }
     return (
         <AppBar position="static" color='transparent' sx={{ padding: '1rem', margin: '2rem' }}>
             <Container maxWidth="xl">
@@ -71,7 +79,71 @@ const TopNavbar = () => {
                         >
                             <MenuIcon />
                         </IconButton>
+
                         <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorElUser}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={Boolean(anchorElUser)}
+                            onClose={handleClose}
+                            sx={{
+                                display: { xs: 'block', md: 'none' },
+                            }}
+                        >
+                            <MenuItem>
+                                <Typography textAlign="center" onClick={() => handleDropDownSelect('profile')}>
+                                    PROFILE
+                                    {!user || user?.isAnonymous ? (
+                                        <Icon color='secondary'>
+                                            <LockPersonIcon />
+                                        </Icon>
+                                    ) : null}
+                                </Typography>
+                            </MenuItem>
+
+                            <MenuItem>
+                                <Typography textAlign="center" onClick={() => handleDropDownSelect('message')}>
+                                    MESSAGE
+                                    {!user || user?.isAnonymous ? (
+                                        <Icon color='secondary'>
+                                            <LockPersonIcon />
+                                        </Icon>
+                                    ) : null}
+                                </Typography>
+                            </MenuItem>
+
+                            <MenuItem>
+                                <Typography textAlign="center" onClick={() => handleDropDownSelect('logout')}>
+                                    LOGOUT
+                                    {!user || user?.isAnonymous ? (
+                                        <Icon color='secondary'>
+                                            <LockPersonIcon />
+                                        </Icon>
+                                    ) : null}
+                                </Typography>
+                            </MenuItem>
+
+                            <MenuItem>
+                                <Typography textAlign="center" onClick={handleUpload}>
+                                    UPLOAD
+                                    {!user || user?.isAnonymous ? (
+                                        <Icon color='secondary'>
+                                            <LockPersonIcon />
+                                        </Icon>
+                                    ) : null}
+                                </Typography>
+                            </MenuItem>
+                        </Menu>
+
+                        {/* <Menu
                             id="menu-appbar"
                             anchorEl={anchorElNav}
                             anchorOrigin={{
@@ -84,7 +156,7 @@ const TopNavbar = () => {
                                 horizontal: 'left',
                             }}
                             open={Boolean(anchorElNav)}
-                            onClose={handleCloseNavMenu}
+                            onClose={handleClose}
                             sx={{
                                 display: { xs: 'block', md: 'none' },
                             }}
@@ -92,18 +164,13 @@ const TopNavbar = () => {
                             {photoTilesTypes.map((page) => (
                                 <MenuItem
                                     key={page}
-                                    onClick={handleCloseNavMenu}>
+                                    onClick={handleClose}>
                                     <Typography textAlign="center">
                                         <Link href={page}>{page.toUpperCase()}</Link>
                                     </Typography>
-                                    {/* <Typography textAlign="center">
-                                    <Link href={user?.isAnonymous ? 'profile' : 'upload'}>
-                                        UPLOAD
-                                    </Link>
-                                </Typography> */}
                                 </MenuItem>
                             ))}
-                        </Menu>
+                        </Menu> */}
                     </Box>
 
                     <Typography
@@ -128,7 +195,7 @@ const TopNavbar = () => {
                         {photoTilesTypes.map((page) => (
                             <Button
                                 key={page}
-                                onClick={() => handleCloseNavMenu(page)}
+                                onClick={() => handlePageNavigation(page)}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
                                 {page}
@@ -159,31 +226,54 @@ const TopNavbar = () => {
                                 horizontal: 'right',
                             }}
                             open={Boolean(anchorElUser)}
-                        // onClose={handleCloseUserMenu}
+                            onClose={handleClose}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting}>
-                                    <Typography textAlign="center">
-                                        <Link href={setting} onClick={(e) => handleCloseUserMenu(e, setting)}>
-                                            {setting.toUpperCase()}
-                                        </Link>
-                                    </Typography>
-
-                                </MenuItem>
-
-                            ))}
                             <MenuItem>
-                                <Typography textAlign="center">
-                                    <Link href={'upload'} onClick={handleCloseUserMenu}>
-                                        UPLOAD
-                                        {!user || user?.isAnonymous ? (
-                                            <Icon color='secondary'>
-                                                <LockPersonIcon />
-                                            </Icon>
-                                        ) : null}
+                                <SignIn />
+                            </MenuItem>
 
-                                    </Link>
-                                </Typography>
+                            <MenuItem>
+                                <Button onClick={() => handleDropDownSelect('profile')}>
+                                    PROFILE
+                                    {!user || user?.isAnonymous ? (
+                                        <Icon color='secondary'>
+                                            <LockPersonIcon />
+                                        </Icon>
+                                    ) : null}
+                                </Button>
+                            </MenuItem>
+
+                            <MenuItem>
+                                <Button onClick={() => handleDropDownSelect('message')}>
+                                    MESSAGE
+                                    {!user || user?.isAnonymous ? (
+                                        <Icon color='secondary'>
+                                            <LockPersonIcon />
+                                        </Icon>
+                                    ) : null}
+                                </Button>
+                            </MenuItem>
+
+                            <MenuItem>
+                                <Button onClick={() => handleDropDownSelect('logout')}>
+                                    LOGOUT
+                                    {!user || user?.isAnonymous ? (
+                                        <Icon color='secondary'>
+                                            <LockPersonIcon />
+                                        </Icon>
+                                    ) : null}
+                                </Button>
+                            </MenuItem>
+
+                            <MenuItem>
+                                <Button onClick={handleUpload}>
+                                    UPLOAD
+                                    {!user || user?.isAnonymous ? (
+                                        <Icon color='secondary'>
+                                            <LockPersonIcon />
+                                        </Icon>
+                                    ) : null}
+                                </Button>
                             </MenuItem>
                         </Menu>
                     </Box>

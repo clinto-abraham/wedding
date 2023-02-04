@@ -5,12 +5,10 @@ import { useAuth } from '@/hooks/useAuth';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '@/redux/loginSlice';
 import { initialLocalState } from '@/Utils/userInitialData';
-import { useRouter } from 'next/router';
 
 const SignIn = () => {
     const dispatch = useDispatch();
     const userInfo = useAuth();
-    const router = useRouter();
     const { user: { isAnonymous } } = useSelector(state => state.user)
     const [loading, setLoading] = useState(false);
     const handleGoogleSignIn = () => {
@@ -20,7 +18,7 @@ const SignIn = () => {
     };
 
     useEffect(() => {
-        if (userInfo?.isAnonymous === undefined) {
+        if (userInfo?.isAnonymous === (undefined || true)) {
             dispatch(registerUser(initialLocalState?.user))
         } else if (userInfo?.isAnonymous === false) {
             dispatch(registerUser({
@@ -35,7 +33,7 @@ const SignIn = () => {
                 tenantId: userInfo?.tenantId,
                 uid: userInfo?.uid
             }))
-            router.push('/upload')
+
         }
     }, [userInfo?.isAnonymous])
 
@@ -62,11 +60,9 @@ const SignIn = () => {
                     }
                     alt="Google"
                 />
-                {loading ? (
-                    <CircularProgress color="inherit" />
-                ) : (" Sign In with Google"
-                )
-                }
+                {loading ?
+                    (<CircularProgress color="inherit" />)
+                    : ('Sign In with Google')}
             </Button>
         </div>
     )

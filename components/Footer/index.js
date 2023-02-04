@@ -15,7 +15,6 @@ const dateCheck = new Date()
 const FooterNavbar = () => {
     const router = useRouter();
     const dispatch = useDispatch()
-    // const [value, setValue] = useState(0);
     const { selected } = useSelector(state => state.utils)
     const [date, setDate] = useState(2022)
     useEffect(() => {

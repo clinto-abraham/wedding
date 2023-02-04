@@ -1,8 +1,7 @@
 import styles from '@/styles/Home.module.css'
 import { Typography } from '@mui/material'
-import Image from 'next/image'
 
-export const Logo = ({ className }) => {
+const Logo = ({ className }) => {
     return (
         <div className={styles[className]}>
             <Typography variant='h3'>
@@ -17,16 +16,5 @@ export const Logo = ({ className }) => {
         </div>
     )
 }
-
-export const NextLogo = () => (
-    <Image
-        className={styles.logo}
-        src="/next.svg"
-        alt="Next.js Logo"
-        width={180}
-        height={37}
-        priority
-    />
-)
 
 export default Logo

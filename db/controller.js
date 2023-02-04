@@ -1,7 +1,7 @@
 //  Controller 
 import clientPromise from '@/db/mongodb'
-import FilesEngage from '../model/engageSchema'
-import FilesMarriage from '../model/marriageSchema'
+import FilesEngage from '@/model/engageSchema'
+import FilesMarriage from '@/model/marriageSchema'
 
 // get : http://localhost:3000/api/engage-pics
 export async function getEngageFiles(req, res) {

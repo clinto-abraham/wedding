@@ -42,8 +42,9 @@ export default function Marriage() {
                 })
             })
         }
-
     }, [localData])
+
+    console.log(URL, 'URL CHECKS')
 
     return (
         <Container >

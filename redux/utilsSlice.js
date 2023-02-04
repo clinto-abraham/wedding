@@ -4,7 +4,9 @@ const initialState = {
     seconds: 20,
     pushURL: false,
     color: 'white',
-    selected: false
+    selected: false,
+    render: 0,
+    verse: 0
 }
 
 export const utilsSlice = createSlice({
@@ -23,9 +25,15 @@ export const utilsSlice = createSlice({
         registerSelected: (state, action) => {
             state.selected = action.payload;
         },
+        registerRendering: (state, action) => {
+            state.render = action.payload;
+        },
+        registerVerse: (state, action) => {
+            state.verse = action.payload;
+        },
     }
 })
 
-export const { registerSeconds, registerPushURL, registerColor, registerSelected } = utilsSlice.actions
+export const { registerSeconds, registerPushURL, registerColor, registerSelected, registerRendering, registerVerse } = utilsSlice.actions
 
 export default utilsSlice.reducer;

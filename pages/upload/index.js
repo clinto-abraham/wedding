@@ -6,7 +6,6 @@ import {
 } from "firebase/storage";
 import { Stack, Button, Typography } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import storage from "@/Utils/firebase";
 import { v4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import { registerImageUploadBase } from "@/redux/uploadSlice";
@@ -15,6 +14,8 @@ import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
 import { useRouter } from "next/router";
 import { Box } from "@mui/system";
+import { storage } from "@/Utils/firebase";
+import TopNavbar from "@/components/Navbar";
 
 function FirebaseUpload() {
     const { imageUploadBase, photoTilesTypes, fileTypes } = useSelector(state => state.uploads)

@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import dynamic from 'next/dynamic'
+// import dynamic from 'next/dynamic'
+// import { Skeleton } from '@mui/material';
 import styles from '@/styles/Home.module.css'
-import { Skeleton } from '@mui/material';
+
 // import clientPromise from '../lib/mongodb'
 import { Header } from '@/components/Header'
 import { useSelector, useDispatch } from 'react-redux'
@@ -21,20 +22,22 @@ import {
   getDownloadURL,
   listAll,
 } from "firebase/storage";
+import Logo from '@/components/Logo';
+import PhotoTilesNavbar from '@/components/PhotoTiles';
 
 const imageRefs = (props) => ref(storage, `images/${props}`);
 
-const DynamicLogo = dynamic(() => import('@/components/Logo'), {
-  loading: () => <Skeleton />,
-})
+// const DynamicLogo = dynamic(() => import('@/components/Logo'), {
+//   loading: () => <Skeleton />,
+// })
 
-const DynamicPhotoTilesNavbar = dynamic(() => import('@/components/PhotoTiles'), {
-  loading: () => (<>
-    <Skeleton variant="rectangular" width={210} height={118} />
-    <Skeleton />
-    <Skeleton width="60%" />
-  </>),
-})
+// const DynamicPhotoTilesNavbar = dynamic(() => import('@/components/PhotoTiles'), {
+//   loading: () => (<>
+//     <Skeleton variant="rectangular" width={210} height={118} />
+//     <Skeleton />
+//     <Skeleton width="60%" />
+//   </>),
+// })
 
 export default function Home() {
   const { photoTilesTypes } = useSelector(state => state.uploads)
@@ -80,14 +83,14 @@ export default function Home() {
       <Header />
       <main className={styles.main}>
         <div className={styles.center}>
-          <DynamicLogo className={'thirteen'} />
+          <Logo className={'thirteen'} />
         </div>
 
         <div className={styles.grid}>
-          <DynamicPhotoTilesNavbar type='engagement' data='tilePreWedding' register={registerTilePreWedding} />
-          <DynamicPhotoTilesNavbar type='pre-wedding' data='tileEngagement' register={registerTileEngagement} />
-          <DynamicPhotoTilesNavbar type='marriage' data='tileMarriage' register={registerTileMarriage} />
-          <DynamicPhotoTilesNavbar type='post-wedding' data='tilePostWedding' register={registerTilePostWedding} />
+          <PhotoTilesNavbar type='engagement' data='tilePreWedding' register={registerTilePreWedding} />
+          <PhotoTilesNavbar type='pre-wedding' data='tileEngagement' register={registerTileEngagement} />
+          <PhotoTilesNavbar type='marriage' data='tileMarriage' register={registerTileMarriage} />
+          <PhotoTilesNavbar type='post-wedding' data='tilePostWedding' register={registerTilePostWedding} />
         </div>
 
       </main>

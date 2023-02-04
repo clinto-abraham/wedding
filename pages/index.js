@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import dynamic from 'next/dynamic'
 import styles from '@/styles/Home.module.css'
 import { Header } from '@/components/Header'
 import { useSelector, useDispatch } from 'react-redux'
@@ -56,7 +55,6 @@ export default function Home() {
   }
 
   useEffect(() => {
-    localStorage.clear()
     fetchPhotos(imageRefs(photoTilesTypes[0]));
     fetchPhotos(imageRefs(photoTilesTypes[1]));
     fetchPhotos(imageRefs(photoTilesTypes[2]));
@@ -68,7 +66,7 @@ export default function Home() {
       <Header />
       <main className={styles.main}>
         <div className={styles.center}>
-          <DynamicLogo className={'thirteen'} />
+          <Logo className={'thirteen'} />
         </div>
 
         <div className={styles.grid}>

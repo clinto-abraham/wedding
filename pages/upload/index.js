@@ -4,7 +4,7 @@ import {
     uploadBytes,
     getDownloadURL,
 } from "firebase/storage";
-import { Stack, Button } from '@mui/material';
+import { Stack, Button, Typography } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import storage from "@/Utils/firebase";
 import { v4 } from "uuid";
@@ -14,10 +14,10 @@ import { FileUploader } from "react-drag-drop-files";
 import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
 import { useRouter } from "next/router";
+import { Box } from "@mui/system";
 
 function FirebaseUpload() {
     const { imageUploadBase, photoTilesTypes, fileTypes } = useSelector(state => state.uploads)
-    // const [imageUrls, setImageUrls] = useState([]);
     const [file, setFile] = useState(null);
     const dispatch = useDispatch();
     const { user } = useSelector(state => state.user)
@@ -47,77 +47,54 @@ function FirebaseUpload() {
         setFile(fileSelected);
     };
 
-    return (
-        <div className={styles.upload}>
-            <FileUploader
-                handleChange={handleFileSelect}
-                name='file'
-                types={fileTypes}
-                // multiple={true}
-                dropMessageStyle={
-                    { backgroundColor: 'green' }
-                }
-                hoverTitle='After drag or drop or select file, do submit'
-            />
-
-            <Stack spacing={4} direction="row" sx={{ margin: '7rem 0rem', display: 'block' }}>
-                {photoTilesTypes.map((type, i) => (
-                    <Button
-                        key={i + type}
-                        variant='contained'
-                        sx={{ minWidth: '16rem', padding: '1rem', margin: '2rem 1.2rem' }}
-                        onClick={() => handleUpload(type)}
-                    >
-                        <CloudUploadIcon sx={{ margin: '0rem 1rem' }} />
-                        {type}
-                    </Button>
-                ))}
-            </Stack>
-            {imageUploadBase.length ?
-                <Image
-                    className={styles.logo}
-                    src={imageUploadBase}
-                    alt="Uploaded Image"
-                    width={180}
-                    height={37}
-                    priority
+    return (<>
+        {user?.email === ('clinto92@gmail.com' || 'chippynt@gmail.com') ? (
+            <div className={styles.upload}>
+                <FileUploader
+                    handleChange={handleFileSelect}
+                    name='file'
+                    types={fileTypes}
+                    // multiple={true}
+                    dropMessageStyle={
+                        { backgroundColor: 'green' }
+                    }
+                    hoverTitle='After drag or drop or select file, do submit'
                 />
-                : null}
-        </div>
+
+                <Stack spacing={4} direction="row" sx={{ margin: '7rem 0rem', display: 'block' }}>
+                    {photoTilesTypes.map((type, i) => (
+                        <Button
+                            key={i + type}
+                            variant='contained'
+                            sx={{ minWidth: '16rem', padding: '1rem', margin: '2rem 1.2rem' }}
+                            onClick={() => handleUpload(type)}
+                        >
+                            <CloudUploadIcon sx={{ margin: '0rem 1rem' }} />
+                            {type}
+                        </Button>
+                    ))}
+                </Stack>
+                {imageUploadBase.length ?
+                    <Image
+                        className={styles.logo}
+                        src={imageUploadBase}
+                        alt="Uploaded Image"
+                        width={180}
+                        height={37}
+                        priority
+                    />
+                    : null}
+            </div>)
+            : (<Box sx={{ margin: '16rem 0rem', padding: '0rem 10rem', display: 'block' }}>
+                <Typography variant='h3'>You are not authorized to upload or change any data. Thanks for visiting us! Go back to home page and enjoy the album and don't forget to comment.</Typography>
+                <Button fullWidth sx={{ margin: '2rem 1rem' }} variant='contained' size='large' onClick={() => router.push('/')}>
+                    Home
+                </Button>
+            </Box>
+            )
+        }
+    </>
     );
 }
 
 export default FirebaseUpload;
-
-// import styles from '@/styles/Home.module.css'
-// import { Typography } from '@mui/material'
-// import Image from 'next/image'
-
-// export const Logo = ({ className }) => {
-//     return (
-//         <div className={styles[className]}>
-//             <Typography variant='h3'>
-//                 C
-//             </Typography>
-//             <Typography variant='h5' sx={{ margin: '0rem 1.6rem' }}>
-//                 &
-//             </Typography>
-//             <Typography variant='h3'>
-//                 C
-//             </Typography>
-//         </div>
-//     )
-// }
-
-// export const NextLogo = () => (
-//     <Image
-//         className={styles.logo}
-//         src="/next.svg"
-//         alt="Next.js Logo"
-//         width={180}
-//         height={37}
-//         priority
-//     />
-// )
-
-// export default Logo

@@ -1,5 +1,5 @@
 //  Controller 
-import clientPromise from '@/lib/mongodb'
+import clientPromise from '@/db/mongodb'
 import FilesEngage from '../model/engageSchema'
 import FilesMarriage from '../model/marriageSchema'
 

@@ -43,15 +43,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const appFirebase = initializeApp(firebaseConfig);
 
-// const storage = getStorage(app);
-// Enable Firestore Cache
-// storage.firestore()
-//     .enablePersistence()
-//     .catch((err) => {
-//         console.error(err);
-//     });
-
-
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
     prompt: "select_account",
@@ -61,19 +52,7 @@ export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
 export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
 export const signOutUser = async () => await signOut(auth);
-export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
-export const getCurrentUser = () => {
-    return new Promise((resolve, reject) => {
-        const unsubscribe = onAuthStateChanged(
-            auth,
-            (userAuth) => {
-                unsubscribe();
-                resolve(userAuth);
-            },
-            reject
-        );
-    });
-};
+// export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
 
 export const storage = getStorage(appFirebase);;
 

@@ -7,7 +7,7 @@ import { registerUser } from '@/redux/loginSlice';
 import { initialLocalState } from '@/Utils/userInitialData';
 import { useRouter } from 'next/router';
 
-const Login = () => {
+const SignIn = () => {
     const dispatch = useDispatch();
     const userInfo = useAuth();
     const router = useRouter();
@@ -48,10 +48,9 @@ const Login = () => {
     return (
         <div>
             <Button
-                fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                type="button"
+
                 onClick={handleGoogleSignIn}
                 disabled={!isAnonymous}
             >
@@ -73,4 +72,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default SignIn

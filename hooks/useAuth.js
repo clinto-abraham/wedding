@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "@/Utils/firebase";
+import { auth, signInWithGooglePopup } from "@/Utils/firebase";
 
 export function useAuth() {
     const [currentUser, setCurrentUser] = useState();
@@ -10,6 +10,7 @@ export function useAuth() {
             setCurrentUser(user)
         });
         return () => unsubscribe();
+        // signInWithGooglePopup()
     }, [])
 
     return currentUser;

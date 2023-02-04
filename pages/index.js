@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
+import dynamic from 'next/dynamic'
 import styles from '@/styles/Home.module.css'
-import clientPromise from '../lib/mongodb'
+import { Skeleton } from '@mui/material';
+// import clientPromise from '../lib/mongodb'
 import { Header } from '@/components/Header'
-import PhotoTilesNavbar from '@/components/PhotoTiles';
 import { useSelector, useDispatch } from 'react-redux'
-import Logo from '@/components/Logo';
 import { storage } from "@/Utils/firebase";
 import {
   registerEngagementUploadsFromFirebase,
@@ -24,40 +24,51 @@ import {
 
 const imageRefs = (props) => ref(storage, `images/${props}`);
 
-export default function Home(
-  // { isConnected }
-) {
+const DynamicLogo = dynamic(() => import('@/components/Logo'), {
+  loading: () => <Skeleton />,
+})
+
+const DynamicPhotoTilesNavbar = dynamic(() => import('@/components/PhotoTiles'), {
+  loading: () => (<>
+    <Skeleton variant="rectangular" width={210} height={118} />
+    <Skeleton />
+    <Skeleton width="60%" />
+  </>),
+})
+
+export default function Home() {
   const { photoTilesTypes } = useSelector(state => state.uploads)
   const dispatch = useDispatch();
 
   const fetchPhotos = (imagesListRef) => {
     listAll(imagesListRef).then((response) => {
       // console.log('response from listAll method', response.items[0]._location.path_)
-      const convertIntoURL = (register) => {
+      const convertIntoURL = (register, type) => {
         response.items.forEach((item) => {
           getDownloadURL(item).then((url) => {
             dispatch(register(url))
+            localStorage.setItem(type, url)
           });
         });
       }
       if (response.items[0]._location.path_.search('engagement') > 0) {
-        convertIntoURL(registerEngagementUploadsFromFirebase)
+        convertIntoURL(registerEngagementUploadsFromFirebase, 'engagement')
       }
       if (response.items[0]._location.path_.search('post-wedding') > 0) {
-        convertIntoURL(registerPostWeddingUploadsFromFirebase)
+        convertIntoURL(registerPostWeddingUploadsFromFirebase, 'post-wedding')
       }
       if (response.items[0]._location.path_.search('wedding') > 0) {
-        convertIntoURL(registerMarriageUploadsFromFirebase)
+        convertIntoURL(registerMarriageUploadsFromFirebase, 'wedding')
       }
       if (response.items[0]._location.path_.search('pre-wedding') > 0) {
-        convertIntoURL(registerPreWeddingUploadsFromFirebase)
+        convertIntoURL(registerPreWeddingUploadsFromFirebase, 'pre-wedding')
       }
 
     });
   }
 
-
   useEffect(() => {
+    localStorage.clear()
     fetchPhotos(imageRefs(photoTilesTypes[0]));
     fetchPhotos(imageRefs(photoTilesTypes[1]));
     fetchPhotos(imageRefs(photoTilesTypes[2]));
@@ -69,15 +80,14 @@ export default function Home(
       <Header />
       <main className={styles.main}>
         <div className={styles.center}>
-          <Logo className={'thirteen'} />
+          <DynamicLogo className={'thirteen'} />
         </div>
 
         <div className={styles.grid}>
-          <PhotoTilesNavbar type='engagement' data='tilePreWedding' register={registerTilePreWedding} />
-          <PhotoTilesNavbar type='pre-wedding' data='tileEngagement' register={registerTileEngagement} />
-          <PhotoTilesNavbar type='marriage' data='tileMarriage' register={registerTileMarriage} />
-          <PhotoTilesNavbar type='post-wedding' data='tilePostWedding' register={registerTilePostWedding} />
-
+          <DynamicPhotoTilesNavbar type='engagement' data='tilePreWedding' register={registerTilePreWedding} />
+          <DynamicPhotoTilesNavbar type='pre-wedding' data='tileEngagement' register={registerTileEngagement} />
+          <DynamicPhotoTilesNavbar type='marriage' data='tileMarriage' register={registerTileMarriage} />
+          <DynamicPhotoTilesNavbar type='post-wedding' data='tilePostWedding' register={registerTilePostWedding} />
         </div>
 
       </main>
@@ -96,16 +106,16 @@ export default function Home(
 //   )
 // }
 
-export async function getServerSideProps(context) {
-  try {
-    await clientPromise
-    return {
-      props: { isConnected: true },
-    }
-  } catch (e) {
-    console.error(e)
-    return {
-      props: { isConnected: false },
-    }
-  }
-}
+// export async function getServerSideProps(context) {
+//   try {
+//     await clientPromise
+//     return {
+//       props: { isConnected: true },
+//     }
+//   } catch (e) {
+//     console.error(e)
+//     return {
+//       props: { isConnected: false },
+//     }
+//   }
+// }

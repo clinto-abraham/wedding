@@ -3,20 +3,13 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
     user: {
         accessToken: '',
-        auth: {},
-        displayName: 'Clinto',
+        displayName: '',
         email: '',
         emailVerified: false,
         isAnonymous: true,
-        metadata: {},
         phoneNumber: null,
         photoURL: '',
-        proactiveRefresh: {},
-        providerData: [],
         providerId: 'firebase',
-        reloadListener: null,
-        reloadUserInfo: {},
-        stsTokenManager: {},
         tenantId: null,
         uid: ''
     }

@@ -52,7 +52,7 @@ export default function Marriage() {
             <Typography variant='caption' align='center'>22nd May 2022</Typography>
             <ImageList variant="masonry" cols={3} gap={8}>
 
-                {URL?.map((pic, index) => (
+                {(URL ? URL : marriage)?.map((pic, index) => (
                     <ImageListItem key={index} onClick={() => console.log("clicked image list", pic)}>
                         <img
                             src={`${pic}?w=248&fit=crop&auto=format`}

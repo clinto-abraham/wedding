@@ -1,26 +1,31 @@
 import * as React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Icon, AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import LockPersonIcon from '@mui/icons-material/LockPerson';
 import Link from 'next/link'
 import { useRouter } from 'next/router';
 import SignIn from '../SignIn';
+import { signOutUser } from '@/Utils/firebase';
+import { registerUser } from '@/redux/loginSlice';
+import { initialLocalState } from '@/Utils/userInitialData';
+import { registerRendering } from '@/redux/utilsSlice';
 
 const TopNavbar = () => {
     const router = useRouter()
+    const dispatch = useDispatch()
     const { photoTilesTypes } = useSelector(state => state.uploads)
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
+    const { render } = useSelector(state => state.utils)
+    // const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const { user } = useSelector(state => state.user)
-    console.log('re-rendering')
 
+    console.log(render)
+    React.useEffect(() => {
+        dispatch(registerRendering(render + 1))
+    }, [])
     const handlePageNavigation = page => {
         router.push(page)
-    };
-
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
     };
 
     const handleOpenUserMenu = (event) => {
@@ -32,18 +37,26 @@ const TopNavbar = () => {
     };
 
     const handleDropDownSelect = (page) => {
+        if (page === 'logout') {
+            signOutUser()
+            dispatch(registerUser(initialLocalState.user))
+            router.push('/')
+        } else if (page === 'upload') {
+            if (user?.email === ('clinto92@gmail.com' || 'chippynt@gmail.com')) router.push(page)
+        } else if (page === 'message') {
+            if (!user?.isAnonymous) router.push(page)
+        } else if (page === 'profile') {
+            if (!user?.isAnonymous) router.push(page)
+        }
+        setAnchorElUser(null);
+    }
 
-        setAnchorElUser(null);
-        if (page) {
-            router.push(page)
-        }
-    }
-    const handleUpload = () => {
-        if (user && !user.isAnonymous) {
-            router.push('/upload')
-        }
-        setAnchorElUser(null);
-    }
+    // const handleUpload = () => {
+    //     if (user && !user.isAnonymous) {
+    //         router.push('/upload')
+    //     }
+    //     setAnchorElUser(null);
+    // }
     return (
         <AppBar position="static" color='transparent' sx={{ padding: '1rem', margin: '2rem' }}>
             <Container maxWidth="xl">
@@ -74,7 +87,7 @@ const TopNavbar = () => {
                             aria-label="account of current user"
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
-                            onClick={handleOpenNavMenu}
+                            onClick={handleOpenUserMenu}
                             color="inherit"
                         >
                             <MenuIcon />
@@ -132,7 +145,7 @@ const TopNavbar = () => {
                             </MenuItem>
 
                             <MenuItem>
-                                <Typography textAlign="center" onClick={handleUpload}>
+                                <Typography textAlign="center" onClick={() => handleDropDownSelect('upload')}>
                                     UPLOAD
                                     {!user || user?.isAnonymous ? (
                                         <Icon color='secondary'>
@@ -266,7 +279,7 @@ const TopNavbar = () => {
                             </MenuItem>
 
                             <MenuItem>
-                                <Button onClick={handleUpload}>
+                                <Button onClick={() => handleDropDownSelect('upload')}>
                                     UPLOAD
                                     {!user || user?.isAnonymous ? (
                                         <Icon color='secondary'>

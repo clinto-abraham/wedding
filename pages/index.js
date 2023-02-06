@@ -1,78 +1,61 @@
 import { useEffect } from 'react';
-import dynamic from 'next/dynamic'
 import styles from '@/styles/Home.module.css'
-import { Skeleton } from '@mui/material';
-// import clientPromise from '../lib/mongodb'
 import { Header } from '@/components/Header'
 import { useSelector, useDispatch } from 'react-redux'
 import { storage } from "@/Utils/firebase";
 import {
-  registerEngagementUploadsFromFirebase,
-  registerPreWeddingUploadsFromFirebase,
-  registerMarriageUploadsFromFirebase,
-  registerPostWeddingUploadsFromFirebase,
-  registerTilePreWedding,
-  registerTileEngagement,
-  registerTileMarriage,
-  registerTilePostWedding
+  registerDisplayEngagement,
+  registerDisplayPreWedding,
+  registerDisplayMarriage,
+  registerDisplayPostWedding,
 } from "@/redux/uploadSlice";
 import {
   ref,
   getDownloadURL,
   listAll,
 } from "firebase/storage";
+import Logo from '@/components/Logo';
+import PhotoTilesNavbar from '@/components/PhotoTiles';
+import { Grid } from '@mui/material';
 
-const imageRefs = (props) => ref(storage, `images/${props}`);
-
-const DynamicLogo = dynamic(() => import('@/components/Logo'), {
-  loading: () => <Skeleton />,
-})
-
-const DynamicPhotoTilesNavbar = dynamic(() => import('@/components/PhotoTiles'), {
-  loading: () => (<>
-    <Skeleton variant="rectangular" width={210} height={118} />
-    <Skeleton />
-    <Skeleton width="60%" />
-  </>),
-})
+const imageRefs = (props) => ref(storage, `display/${props}`);
 
 export default function Home() {
-  const { photoTilesTypes } = useSelector(state => state.uploads)
+  const { displayTypes } = useSelector(state => state.uploads)
   const dispatch = useDispatch();
 
   const fetchPhotos = (imagesListRef) => {
     listAll(imagesListRef).then((response) => {
-      // console.log('response from listAll method', response.items[0]._location.path_)
-      const convertIntoURL = (register, type) => {
+      const convertIntoURL = (register) => {
         response.items.forEach((item) => {
           getDownloadURL(item).then((url) => {
             dispatch(register(url))
-            localStorage.setItem(type, url)
           });
         });
       }
-      if (response.items[0]._location.path_.search('engagement') > 0) {
-        convertIntoURL(registerEngagementUploadsFromFirebase, 'engagement')
+      const responseSearch = (param) => response?.items[0]?._location?.path_?.search(param)
+      if (responseSearch(displayTypes[0]) > 0) {
+        convertIntoURL(registerDisplayEngagement)
       }
-      if (response.items[0]._location.path_.search('post-wedding') > 0) {
-        convertIntoURL(registerPostWeddingUploadsFromFirebase, 'post-wedding')
+      if (responseSearch(displayTypes[1]) > 0) {
+        convertIntoURL(registerDisplayPreWedding)
       }
-      if (response.items[0]._location.path_.search('wedding') > 0) {
-        convertIntoURL(registerMarriageUploadsFromFirebase, 'wedding')
+      if (responseSearch(displayTypes[2]) > 0) {
+        convertIntoURL(registerDisplayMarriage)
       }
-      if (response.items[0]._location.path_.search('pre-wedding') > 0) {
-        convertIntoURL(registerPreWeddingUploadsFromFirebase, 'pre-wedding')
+      if (responseSearch(displayTypes[3]) > 0) {
+        convertIntoURL(registerDisplayPostWedding)
       }
-
     });
   }
 
   useEffect(() => {
     localStorage.clear()
-    fetchPhotos(imageRefs(photoTilesTypes[0]));
-    fetchPhotos(imageRefs(photoTilesTypes[1]));
-    fetchPhotos(imageRefs(photoTilesTypes[2]));
-    fetchPhotos(imageRefs(photoTilesTypes[3]));
+    fetchPhotos(imageRefs(displayTypes[0]));
+    fetchPhotos(imageRefs(displayTypes[1]));
+    fetchPhotos(imageRefs(displayTypes[2]));
+    fetchPhotos(imageRefs(displayTypes[3]));
+    console.log(localStorage, 'localStorage')
   }, []);
 
   return (
@@ -80,16 +63,31 @@ export default function Home() {
       <Header />
       <main className={styles.main}>
         <div className={styles.center}>
-          <DynamicLogo className={'thirteen'} />
+          <Logo className={'thirteen'} />
         </div>
-
-        <div className={styles.grid}>
-          <DynamicPhotoTilesNavbar type='engagement' data='tilePreWedding' register={registerTilePreWedding} />
-          <DynamicPhotoTilesNavbar type='pre-wedding' data='tileEngagement' register={registerTileEngagement} />
-          <DynamicPhotoTilesNavbar type='marriage' data='tileMarriage' register={registerTileMarriage} />
-          <DynamicPhotoTilesNavbar type='post-wedding' data='tilePostWedding' register={registerTilePostWedding} />
-        </div>
-
+        {/* <div className={styles.grid}> */}
+        <Grid container spacing={2}>
+          <PhotoTilesNavbar
+            type='pre-WeddingDisplay'
+            // data='tilePreWedding'
+            register={registerDisplayPreWedding}
+          />
+          <PhotoTilesNavbar
+            type='engagementDisplay'
+            // data='tileEngagement'
+            register={registerDisplayEngagement}
+          />
+          <PhotoTilesNavbar
+            type='marriageDisplay'
+            // data='tileMarriage'
+            register={registerDisplayMarriage}
+          />
+          <PhotoTilesNavbar
+            type='post-WeddingDisplay'
+            // data='tilePostWedding'
+            register={registerDisplayPostWedding}
+          />
+        </Grid>
       </main>
     </>
   )
@@ -119,3 +117,15 @@ export default function Home() {
 //     }
 //   }
 // }
+
+// const DynamicLogo = dynamic(() => import('@/components/Logo'), {
+//   loading: () => <Skeleton />,
+// })
+
+// const DynamicPhotoTilesNavbar = dynamic(() => import('@/components/PhotoTiles'), {
+//   loading: () => (<>
+//     <Skeleton variant="rectangular" width={210} height={118} />
+//     <Skeleton />
+//     <Skeleton width="60%" />
+//   </>),
+// })

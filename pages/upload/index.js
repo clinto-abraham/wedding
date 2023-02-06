@@ -6,7 +6,6 @@ import {
 } from "firebase/storage";
 import { Stack, Button, Typography } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import storage from "@/Utils/firebase";
 import { v4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import { registerImageUploadBase } from "@/redux/uploadSlice";
@@ -15,6 +14,9 @@ import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
 import { useRouter } from "next/router";
 import { Box } from "@mui/system";
+import { storage } from "@/Utils/firebase";
+
+const displayTypes = ['engagement Display', 'pre-Wedding Display', 'marriage Display', 'post-Wedding Display']
 
 function FirebaseUpload() {
     const { imageUploadBase, photoTilesTypes, fileTypes } = useSelector(state => state.uploads)
@@ -40,7 +42,19 @@ function FirebaseUpload() {
                 });
             });
         }
+    };
 
+    const handleUploadDisplay = (type) => {
+        const folderDir = type.slice(0, -8).replace('-', '')
+        if (file?.name) {
+            const imageRef = ref(storage, `display/${folderDir}/${v4().slice(0, 10)}`);
+            uploadBytes(imageRef, file).then((snapshot) => {
+                getDownloadURL(snapshot.ref).then((url) => {
+                    dispatch(registerImageUploadBase(url))
+                    setFile(null)
+                });
+            });
+        }
     };
 
     const handleFileSelect = (fileSelected) => {
@@ -73,6 +87,17 @@ function FirebaseUpload() {
                             {type}
                         </Button>
                     ))}
+                    {displayTypes.map((type, i) => (
+                        <Button
+                            key={i + type}
+                            variant='contained'
+                            sx={{ minWidth: '16rem', padding: '1rem', margin: '2rem 1.2rem' }}
+                            onClick={() => handleUploadDisplay(type.trim())}
+                        >
+                            <CloudUploadIcon sx={{ margin: '0rem 1rem' }} />
+                            {type}
+                        </Button>
+                    ))}{ }
                 </Stack>
                 {imageUploadBase.length ?
                     <Image

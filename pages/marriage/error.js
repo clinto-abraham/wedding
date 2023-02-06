@@ -15,7 +15,7 @@ export default function Error({
       <button
         onClick={() => reset()}
       >
-        Try again
+        Clinto Try again
       </button>
     </div>
   );

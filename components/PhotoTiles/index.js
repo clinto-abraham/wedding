@@ -2,7 +2,7 @@ import Link from 'next/link';
 import styles from '@/styles/Home.module.css'
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { styled, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, IconButton, Typography, } from '@mui/material';
+import { styled, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, IconButton, Typography, Grid, } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -27,40 +27,51 @@ const PhotoTilesNavbar = props => {
         setExpanded(!expanded);
     };
     const { type, data, register } = props;
-    const indexOfDash = type.indexOf('-')
-    const refactoredProps = type.slice(0, indexOfDash) + type.slice(indexOfDash + 1, indexOfDash + 2).toUpperCase() + type.slice(indexOfDash + 2)
-    useEffect(() => {
-        if (indexOfDash > 0) {
-            dispatch(register(uploads[refactoredProps][0]))
-        } else if (indexOfDash < 0) {
-            dispatch(register(uploads[type][0]))
-        }
-    }, [indexOfDash > 0 ? uploads[refactoredProps][0] : uploads[type][0]])
+    // const indexOfDash = type.indexOf('-')
+    // const refactoredProps = type.slice(0, indexOfDash) + type.slice(indexOfDash + 1, indexOfDash + 2).toUpperCase() + type.slice(indexOfDash + 2)
+    const refactoredType = type.slice(0, -7).replace('-', '')
+    const refactoredTitle = type.slice(0, -7)
+    const refactoredProps = type.replace('-', '')
+    const srcURL = uploads[refactoredProps]
+    console.log(srcURL, 'srcURL', type, 'type', refactoredType, 'refactoredType', uploads, 'uploads')
 
-    return (<>
-        <Card sx={{ maxWidth: 545, color: 'white', background: 'transparent', margin: '0.1rem' }} className={styles.card}>
+    // useEffect(() => {
+    //     console.log(uploads[refactoredType][0], 'uploads[refactoredType][0]')
+    //     dispatch(register(uploads[refactoredType][0]))
+    //     console.log(uploads[refactoredType], 'uploads[refactoredType]')
+    // if (indexOfDash > 0) {
+    //     dispatch(register(uploads[refactoredProps][0]))
+    // } else if (indexOfDash < 0) {
+    //     dispatch(register(uploads[type][0]))
+    // }
+    // }, [])
+    // [indexOfDash > 0 ? uploads[refactoredProps][0] : uploads[type][0]])
+
+    return (<Grid item xs={12} sm={12} xl={6} md={6} lg={6}>
+        <Card sx={{ color: 'white', background: 'transparent', margin: '0.1rem' }} className={styles.card}>
             <CardHeader
                 action={
                     <IconButton aria-label="settings" sx={{ color: 'white' }}>
                         <MoreVertIcon />
                     </IconButton>
                 }
-                title={type.toUpperCase()}
+                title={refactoredTitle.toUpperCase()}
             />
             <Link
-                href={`/${type}`}
+                href={`/${refactoredTitle.toLowerCase()}`}
             >
                 <CardMedia
                     component="img"
-                    height="194"
-                    image={uploads[data]}
-                    alt="Paella dish"
+                    height='304px'
+                    // width='700px'
+                    image={srcURL}
+                    alt={`Display pic of ${refactoredType}`}
                 />
 
             </Link>
             <CardContent>
                 <Typography variant="body2">
-                    See highlights of {type} and&nbsp; its photos here.
+                    See highlights of {refactoredTitle} and&nbsp; its photos here.
                 </Typography>
                 <Typography variant='caption'>September 14, 2016</Typography>
             </CardContent>
@@ -111,7 +122,7 @@ const PhotoTilesNavbar = props => {
                 </CardContent>
             </Collapse>
         </Card>
-    </>
+    </Grid>
     )
 }
 

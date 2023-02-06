@@ -8,62 +8,62 @@ const initialState = {
     photoTilesTypes: ['engagement', 'pre-wedding', 'marriage', 'post-wedding'],
     imageUploadBase: [],
     fileTypes: ['JPG', 'PNG', 'GIF'],
-    tilePreWedding: '',
-    tileEngagement: '',
-    tileMarriage: '',
-    tilePostWedding: '',
+    engagementDisplay: [],
+    preWeddingDisplay: [],
+    marriageDisplay: [],
+    postWeddingDisplay: [],
+    displayTypes: ['engagement', 'preWedding', 'marriage', 'postWedding'],
+
 }
 
 export const uploadSlice = createSlice({
     name: 'uploads',
     initialState,
     reducers: {
-        registerEngagementUploadsFromFirebase: (state, action) => {
-            // state.engagement = [];
+        registerEngagement: (state, action) => {
             state.engagement.push(action.payload);
         },
-        registerPreWeddingUploadsFromFirebase: (state, action) => {
-            // state.preWedding = [];
+        registerPreWedding: (state, action) => {
             state.preWedding.push(action.payload);
         },
-        registerMarriageUploadsFromFirebase: (state, action) => {
-            // state.marriage = [];
+        registerMarriage: (state, action) => {
             state.marriage.push(action.payload);
         },
-        registerPostWeddingUploadsFromFirebase: (state, action) => {
-            // state.postWedding = [];
+        registerPostWedding: (state, action) => {
             state.postWedding.push(action.payload);
         },
         registerImageUploadBase: (state, action) => {
-            // state.imageUploadBase = [];
             state.imageUploadBase = action.payload;
         },
-        registerTilePreWedding: (state, action) => {
-            state.tilePreWedding = action.payload;
+        registerDisplayEngagement: (state, action) => {
+            state.engagementDisplay.shift()
+            state.engagementDisplay.push(action.payload);
         },
-        registerTileEngagement: (state, action) => {
-            state.tileEngagement = action.payload;
+        registerDisplayPreWedding: (state, action) => {
+            state.preWeddingDisplay.shift()
+            state.preWeddingDisplay.push(action.payload);
         },
-        registerTileMarriage: (state, action) => {
-            state.tileMarriage = action.payload;
+        registerDisplayMarriage: (state, action) => {
+            state.marriageDisplay.shift()
+            state.marriageDisplay.push(action.payload);
         },
-        registerTilePostWedding: (state, action) => {
-            state.tilePostWedding = action.payload;
+        registerDisplayPostWedding: (state, action) => {
+            state.postWeddingDisplay.shift()
+            state.postWeddingDisplay.push(action.payload);
         },
-
     }
 })
 
 export const {
-    registerEngagementUploadsFromFirebase,
-    registerPreWeddingUploadsFromFirebase,
-    registerMarriageUploadsFromFirebase,
-    registerPostWeddingUploadsFromFirebase,
+    registerEngagement,
+    registerPreWedding,
+    registerMarriage,
+    registerPostWedding,
     registerImageUploadBase,
-    registerTilePreWedding,
-    registerTileEngagement,
-    registerTileMarriage,
-    registerTilePostWedding
+    registerDisplayEngagement,
+    registerDisplayPreWedding,
+    registerDisplayMarriage,
+    registerDisplayPostWedding
 } = uploadSlice.actions
 
 export default uploadSlice.reducer;

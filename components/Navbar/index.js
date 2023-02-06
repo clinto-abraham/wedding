@@ -42,7 +42,7 @@ const TopNavbar = () => {
             dispatch(registerUser(initialLocalState.user))
             router.push('/')
         } else if (page === 'upload') {
-            if (userInfo?.email === ('clinto92@gmail.com' || 'chippynt@gmail.com')) router.push(page)
+            if (user?.email === ('clinto92@gmail.com' || 'chippynt@gmail.com')) router.push(page)
         } else if (page === 'message') {
             if (!user?.isAnonymous) router.push(page)
         } else if (page === 'profile') {

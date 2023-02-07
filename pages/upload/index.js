@@ -87,6 +87,17 @@ function FirebaseUpload() {
                             {type}
                         </Button>
                     ))}
+                    {displayTypes.map((type, i) => (
+                        <Button
+                            key={i + type}
+                            variant='contained'
+                            sx={{ minWidth: '16rem', padding: '1rem', margin: '2rem 1.2rem' }}
+                            onClick={() => handleUploadDisplay(type.trim())}
+                        >
+                            <CloudUploadIcon sx={{ margin: '0rem 1rem' }} />
+                            {type}
+                        </Button>
+                    ))}{ }
                 </Stack>
                 <Stack spacing={4} direction="row" sx={{ margin: '7rem 0rem', display: 'block' }}>
                     {displayTypes.map((type, i) => (

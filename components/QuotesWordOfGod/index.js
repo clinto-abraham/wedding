@@ -17,7 +17,7 @@ const WordOfGod = ({ color, size }) => {
         dispatch(registerVerse(chooseVerse()))
     }, [])
     return (
-        <Grid container sx={{ padding: size }}>
+        <Grid container sx={{ padding: size }} direction='column'>
             <Grid item xs={12} sm={12} xl={12} md={12} lg={12} alignSelf='center'>
                 <Typography variant="h5" color={color}>
                     <FormatQuoteIcon /> {Jesus[verse]} <FormatQuoteIcon />

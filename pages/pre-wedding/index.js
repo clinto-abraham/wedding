@@ -54,7 +54,7 @@ export default function PreWedding() {
             {isLoading ? <TilesSkeleton /> : (<>
                 <Typography variant='h5' align='center'>Pre - Wedding Celebration</Typography>
                 <Typography variant='caption' align='center'>21nd May 2022 & 24th May 2022</Typography>
-                <ImageList variant="masonry" cols={3} gap={8}>
+                <ImageList variant="masonry" cols={1} gap={8}>
 
                     {preWedding.map((pic, index) => (
                         <ImageListItem key={index} onClick={() => console.log("clicked image list")}>

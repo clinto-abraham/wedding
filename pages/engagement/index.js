@@ -54,7 +54,7 @@ export default function Engagement() {
             {isLoading ? <TilesSkeleton /> : (<>
                 <Typography variant='h3' align='center'>Engagement Day</Typography>
                 <Typography variant='caption' align='center'>22nd May 2022</Typography>
-                <ImageList variant="masonry" cols={3} gap={8}>
+                <ImageList variant="masonry" cols={1} gap={8}>
 
                     {engagement.map((pic, index) => (
                         <ImageListItem key={index} onClick={() => console.log("clicked image list")}>

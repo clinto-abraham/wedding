@@ -1,12 +1,11 @@
 import {
     useEffect,
     useState,
-    Button, CircularProgress, Typography, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, IconButton, Paper,
+    Button, CircularProgress, Typography, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, IconButton, Paper, Grid,
     useDispatch, useSelector,
     PhoneAndroidIcon, AttachEmailIcon, MailLockIcon, ExpandMoreIcon, MoreVertIcon,
     styled,
     red,
-    Box
 } from '@/Utils/export'
 import { registerUser } from '@/redux/loginSlice';
 import { initialLocalState } from '@/Utils/userInitialData';
@@ -72,85 +71,71 @@ const Profile = () => {
     }, [isAnonymous])
 
     return (
-        <Box >
-            <Card sx={{ minWidth: 445, maxWidth: 445, margin: '5rem 10rem' }}>
-                <CardHeader
-                    avatar={
-                        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                            {userInfo?.displayName.slice(0, 1)}
-                        </Avatar>
-                    }
-                    action={
-                        <IconButton aria-label="settings">
-                            <MoreVertIcon />
-                        </IconButton>
-                    }
-                    title={userInfo?.displayName}
-                    subheader={userInfo?.emailVerified ? 'Verified' : 'Not verified'}
-                />
-                <CardMedia
-                    component="img"
-                    height='500'
-                    image={userInfo?.photoURL}
-                    alt={userInfo?.displayName}
-                />
-                <CardContent>
-                    <WordOfGod
-                        color='text.secondary'
-                        size='0rem'
+        <Grid container direction='column'>
+            {/* <Grid item> */}
+            <Paper elevation={23} sx={{ backgroundColor: 'transparent', padding: '1rem 0.2rem', margin: 'auto' }}>
+                <Card sx={{ minWidth: 375, maxWidth: 500, }}>
+                    <CardHeader
+                        avatar={
+                            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                                {userInfo?.displayName.slice(0, 1)}
+                            </Avatar>
+                        }
+                        action={
+                            <IconButton aria-label="settings">
+                                <MoreVertIcon />
+                            </IconButton>
+                        }
+                        title={userInfo?.displayName}
+                        subheader={userInfo?.emailVerified ? 'Verified' : 'Not verified'}
                     />
-                    <Typography variant="body2" color="text.secondary">
-                        <MailLockIcon /> :
-                        {userInfo?.email}
-                    </Typography>
-                </CardContent>
-                <CardActions disableSpacing>
-                    <IconButton aria-label="add to favorites">
-                        <PhoneAndroidIcon /> {userInfo?.phoneNumber}
-                    </IconButton>
-                    <IconButton aria-label="share">
-                        <AttachEmailIcon />
-                    </IconButton>
-                    <ExpandMore
-                        expand={expanded}
-                        onClick={handleExpandClick}
-                        aria-expanded={expanded}
-                        aria-label="show more"
-                    >
-                        <ExpandMoreIcon />
-                    </ExpandMore>
-                </CardActions>
-                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardMedia
+                        component="img"
+                        height='500'
+                        image={userInfo?.photoURL}
+                        alt={userInfo?.displayName}
+                    />
                     <CardContent>
-                        <Typography paragraph>Method:</Typography>
-                        <Typography paragraph>
-                            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set
-                            aside for 10 minutes.
-                        </Typography>
-                        <Typography paragraph>
-                            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over
-                            medium-high heat. Add chicken, shrimp and chorizo, and cook, stirring
-                            occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp to a
-                            large plate and set aside, leaving chicken and chorizo in the pan. Add
-                            pimentón, bay leaves, garlic, tomatoes, onion, salt and pepper, and cook,
-                            stirring often until thickened and fragrant, about 10 minutes. Add
-                            saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-                        </Typography>
-                        <Typography paragraph>
-                            Add rice and stir very gently to distribute. Top with artichokes and
-                            peppers, and cook without stirring, until most of the liquid is absorbed,
-                            15 to 18 minutes. Reduce heat to medium-low, add reserved shrimp and
-                            mussels, tucking them down into the rice, and cook again without
-                            stirring, until mussels have opened and rice is just tender, 5 to 7
-                            minutes more. (Discard any mussels that don&apos;t open.)
-                        </Typography>
-                        <Typography>
-                            Set aside off of the heat to let rest for 10 minutes, and then serve.
+                        <WordOfGod
+                            color='text.secondary'
+                            size='0rem'
+                        />
+                        <Typography variant="body2" color="text.secondary">
+                            <MailLockIcon /> :
+                            {userInfo?.email}
                         </Typography>
                     </CardContent>
-                </Collapse>
-            </Card>
-            <Paper elevation={23} sx={{ backgroundColor: 'transparent', margin: '1rem 3rem' }}>
+                    <CardActions disableSpacing>
+                        <IconButton aria-label="add to favorites">
+                            <PhoneAndroidIcon /> {userInfo?.phoneNumber}
+                        </IconButton>
+                        <IconButton aria-label="share">
+                            <AttachEmailIcon />
+                        </IconButton>
+                        <ExpandMore
+                            expand={expanded}
+                            onClick={handleExpandClick}
+                            aria-expanded={expanded}
+                            aria-label="show more"
+                        >
+                            <ExpandMoreIcon />
+                        </ExpandMore>
+                    </CardActions>
+                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                        <CardContent>
+                            <Typography paragraph>Method:</Typography>
+                            <Typography paragraph>
+                                Verified users will be allowed to download the photos in the coming version of this web application.
+                            </Typography>
+                            <Typography paragraph>
+                                Kindly stay patient, since it is under development. If you find any query or web crashes, do notify me.
+                            </Typography>
+                        </CardContent>
+                    </Collapse>
+                </Card>
+            </Paper>
+            {/* </Grid> */}
+            <Paper elevation={23} sx={{ backgroundColor: 'white', margin: 'auto' }}>
                 <Button
                     fullWidth
                     variant="contained"
@@ -175,7 +160,7 @@ const Profile = () => {
                 </Button>
             </Paper>
 
-        </Box>
+        </Grid>
     )
 }
 

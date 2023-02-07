@@ -1,12 +1,10 @@
-import Link from 'next/link';
-import styles from '@/styles/Home.module.css'
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { styled, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, IconButton, Typography, Grid, } from '@mui/material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import {
+    Link,
+    useState,
+    useSelector,
+    styled, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, IconButton, Typography, Grid,
+    FavoriteIcon, ShareIcon, ExpandMoreIcon, MoreVertIcon,
+} from '@/Utils/export'
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -22,33 +20,18 @@ const ExpandMore = styled((props) => {
 const PhotoTilesNavbar = props => {
     const uploads = useSelector(state => state.uploads)
     const [expanded, setExpanded] = useState(false);
-    const dispatch = useDispatch();
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
-    const { type, data, register } = props;
-    // const indexOfDash = type.indexOf('-')
-    // const refactoredProps = type.slice(0, indexOfDash) + type.slice(indexOfDash + 1, indexOfDash + 2).toUpperCase() + type.slice(indexOfDash + 2)
+    const { type } = props;
+
     const refactoredType = type.slice(0, -7).replace('-', '')
     const refactoredTitle = type.slice(0, -7)
     const refactoredProps = type.replace('-', '')
     const srcURL = uploads[refactoredProps]
-    console.log(srcURL, 'srcURL', type, 'type', refactoredType, 'refactoredType', uploads, 'uploads')
-
-    // useEffect(() => {
-    //     console.log(uploads[refactoredType][0], 'uploads[refactoredType][0]')
-    //     dispatch(register(uploads[refactoredType][0]))
-    //     console.log(uploads[refactoredType], 'uploads[refactoredType]')
-    // if (indexOfDash > 0) {
-    //     dispatch(register(uploads[refactoredProps][0]))
-    // } else if (indexOfDash < 0) {
-    //     dispatch(register(uploads[type][0]))
-    // }
-    // }, [])
-    // [indexOfDash > 0 ? uploads[refactoredProps][0] : uploads[type][0]])
 
     return (<Grid item xs={12} sm={12} xl={6} md={6} lg={6}>
-        <Card sx={{ color: 'white', background: 'transparent', margin: '0.1rem' }} className={styles.card}>
+        <Card sx={{ color: 'white', background: 'transparent', margin: '0.1rem' }}>
             <CardHeader
                 action={
                     <IconButton aria-label="settings" sx={{ color: 'white' }}>
@@ -130,3 +113,11 @@ export default PhotoTilesNavbar;
 
 
 
+// import Link from 'next/link';
+// import React, { useState } from 'react';
+// import { useSelector } from 'react-redux';
+// import { styled, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, IconButton, Typography, Grid, } from '@mui/material';
+// import FavoriteIcon from '@mui/icons-material/Favorite';
+// import ShareIcon from '@mui/icons-material/Share';
+// import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+// import MoreVertIcon from '@mui/icons-material/MoreVert';

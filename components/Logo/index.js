@@ -1,5 +1,7 @@
+import {
+    Typography,
+} from '@/Utils/export'
 import styles from '@/styles/Home.module.css'
-import { Typography } from '@mui/material'
 
 const Logo = ({ className }) => {
     return (

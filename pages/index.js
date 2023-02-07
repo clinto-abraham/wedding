@@ -1,7 +1,14 @@
 import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import {
+  ref,
+  getDownloadURL,
+  listAll,
+} from "firebase/storage";
+import { Grid } from '@mui/material';
+
 import styles from '@/styles/Home.module.css'
 import { Header } from '@/components/Header'
-import { useSelector, useDispatch } from 'react-redux'
 import { storage } from "@/Utils/firebase";
 import {
   registerDisplayEngagement,
@@ -9,14 +16,8 @@ import {
   registerDisplayMarriage,
   registerDisplayPostWedding,
 } from "@/redux/uploadSlice";
-import {
-  ref,
-  getDownloadURL,
-  listAll,
-} from "firebase/storage";
 import Logo from '@/components/Logo';
 import PhotoTilesNavbar from '@/components/PhotoTiles';
-import { Grid } from '@mui/material';
 
 const imageRefs = (props) => ref(storage, `display/${props}`);
 
@@ -50,48 +51,49 @@ export default function Home() {
   }
 
   useEffect(() => {
-    localStorage.clear()
     fetchPhotos(imageRefs(displayTypes[0]));
     fetchPhotos(imageRefs(displayTypes[1]));
     fetchPhotos(imageRefs(displayTypes[2]));
     fetchPhotos(imageRefs(displayTypes[3]));
-    console.log(localStorage, 'localStorage')
   }, []);
 
   return (
     <>
       <Header />
-      <main className={styles.main}>
+      <main>
         <div className={styles.center}>
           <Logo className={'thirteen'} />
         </div>
-        {/* <div className={styles.grid}> */}
         <Grid container spacing={2}>
           <PhotoTilesNavbar
             type='pre-WeddingDisplay'
-            // data='tilePreWedding'
-            register={registerDisplayPreWedding}
           />
           <PhotoTilesNavbar
             type='engagementDisplay'
-            // data='tileEngagement'
-            register={registerDisplayEngagement}
           />
           <PhotoTilesNavbar
             type='marriageDisplay'
-            // data='tileMarriage'
-            register={registerDisplayMarriage}
           />
           <PhotoTilesNavbar
             type='post-WeddingDisplay'
-            // data='tilePostWedding'
-            register={registerDisplayPostWedding}
           />
         </Grid>
       </main>
     </>
   )
 }
+
+// import {
+//   useEffect,
+//   useDispatch, useSelector,
+//   Grid,
+//   ref, getDownloadURL, listAll,
+// } from '@/Utils/export'
+
+
+
+
+
 
 // {
 //   isConnected ? (

@@ -4,12 +4,6 @@ import {
     getDownloadURL,
     listAll,
 } from "firebase/storage";
-import {
-    registerEngagementUploadsFromFirebase,
-    registerPreWeddingUploadsFromFirebase,
-    registerMarriageUploadsFromFirebase,
-    registerPostWeddingUploadsFromFirebase,
-} from "@/redux/uploadSlice";
 
 const imageRefs = (props) => ref(storage, `images/${props}`);
 const photoTilesTypes = ['engagement', 'pre-wedding', 'marriage', 'post-wedding'];
@@ -25,6 +19,14 @@ const useFetchPhotos = (imagesListRef) => {
         });
     });
 }
+
+// import {
+//     registerEngagementUploadsFromFirebase,
+//     registerPreWeddingUploadsFromFirebase,
+//     registerMarriageUploadsFromFirebase,
+//     registerPostWeddingUploadsFromFirebase,
+// } from "@/redux/uploadSlice";
+
 
 // const useFetchPhotos = (imagesListRef) => {
 //     return () => listAll(imagesListRef).then((response) => {

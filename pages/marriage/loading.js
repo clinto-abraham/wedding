@@ -1,5 +1,7 @@
+import TilesSkeleton from "@/components/Skeletons/Tiles";
+
 export default function Loading() {
     return (
-        <div>loading</div>
+        <TilesSkeleton />
     )
 }

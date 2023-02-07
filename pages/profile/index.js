@@ -1,22 +1,21 @@
-import { useEffect, useState } from 'react'
-import { Button, CircularProgress, Typography, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, IconButton, Paper } from "@mui/material";
+import {
+    useEffect,
+    useState,
+    Button, CircularProgress, Typography, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, IconButton, Paper,
+    useDispatch, useSelector,
+    PhoneAndroidIcon, AttachEmailIcon, MailLockIcon, ExpandMoreIcon, MoreVertIcon,
+    styled,
+    red,
+    Box
+} from '@/Utils/export'
+import { registerUser } from '@/redux/loginSlice';
+import { initialLocalState } from '@/Utils/userInitialData';
+import WordOfGod from '@/components/QuotesWordOfGod';
+import { useAuth } from '@/hooks/useAuth';
 import {
     signInWithGooglePopup,
     // signInWithGoogleRedirect 
 } from '@/Utils/firebase';
-import { useAuth } from '@/hooks/useAuth';
-import { useDispatch, useSelector } from 'react-redux';
-import { registerUser } from '@/redux/loginSlice';
-import { initialLocalState } from '@/Utils/userInitialData';
-import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
-import AttachEmailIcon from '@mui/icons-material/AttachEmail';
-import { styled } from '@mui/material/styles';
-import { red } from '@mui/material/colors';
-import MailLockIcon from '@mui/icons-material/MailLock';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Box } from '@mui/system';
-import WordOfGod from '@/components/QuotesWordOfGod';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -181,3 +180,15 @@ const Profile = () => {
 }
 
 export default Profile
+
+// import { useEffect, useState } from 'react'
+// import { Button, CircularProgress, Typography, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, IconButton, Paper } from "@mui/material";
+// import { useDispatch, useSelector } from 'react-redux';
+// import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
+// import AttachEmailIcon from '@mui/icons-material/AttachEmail';
+// import { styled } from '@mui/material/styles';
+// import { red } from '@mui/material/colors';
+// import MailLockIcon from '@mui/icons-material/MailLock';
+// import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+// import MoreVertIcon from '@mui/icons-material/MoreVert';
+// import { Box } from '@mui/system';

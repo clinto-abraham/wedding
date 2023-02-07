@@ -1,10 +1,12 @@
-import * as React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Icon, AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import LockPersonIcon from '@mui/icons-material/LockPerson';
-import Link from 'next/link'
-import { useRouter } from 'next/router';
+import {
+    Link,
+    useRouter,
+    useDispatch, useSelector,
+    useState, useEffect,
+    Icon, AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem,
+    MenuIcon, LockPersonIcon,
+} from '@/Utils/export'
+
 import SignIn from '../SignIn';
 import { signOutUser } from '@/Utils/firebase';
 import { registerUser } from '@/redux/loginSlice';
@@ -17,13 +19,14 @@ const TopNavbar = () => {
     const { photoTilesTypes } = useSelector(state => state.uploads)
     const { render } = useSelector(state => state.utils)
     // const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [anchorElUser, setAnchorElUser] = useState(null);
     const { user } = useSelector(state => state.user)
 
     console.log(render)
-    React.useEffect(() => {
+    useEffect(() => {
         dispatch(registerRendering(render + 1))
     }, [])
+
     const handlePageNavigation = page => {
         router.push(page)
     };
@@ -296,3 +299,12 @@ const TopNavbar = () => {
     );
 };
 export default TopNavbar;
+
+
+// import * as React from 'react';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { Icon, AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
+// import MenuIcon from '@mui/icons-material/Menu';
+// import LockPersonIcon from '@mui/icons-material/LockPerson';
+// import Link from 'next/link'
+// import { useRouter } from 'next/router';

@@ -1,15 +1,13 @@
-import { useEffect, useState } from 'react';
-// import Image from 'next/image'
-import Link from 'next/link';
-// import styles from '@/styles/Home.module.css'
-import { Box, BottomNavigation, BottomNavigationAction, Grid, Typography, } from '@mui/material';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { useRouter } from 'next/router';
-import { registerColor, registerSelected } from '@/redux/utilsSlice';
-import { useDispatch, useSelector } from 'react-redux';
-// import Logo from '../Logo';
+import {
+    Link,
+    useRouter,
+    useDispatch, useSelector,
+    useEffect, useState,
+    Box, BottomNavigation, BottomNavigationAction, Grid, Typography,
+    FavoriteIcon, RestoreIcon, LocationOnIcon,
+} from '@/Utils/export'
+import { registerSelected } from '@/redux/utilsSlice';
+
 const dateCheck = new Date()
 
 const FooterNavbar = () => {
@@ -56,3 +54,12 @@ const FooterNavbar = () => {
 }
 
 export default FooterNavbar;
+
+// import { useDispatch, useSelector } from 'react-redux';
+// import { useEffect, useState } from 'react';
+// import Link from 'next/link';
+// import { Box, BottomNavigation, BottomNavigationAction, Grid, Typography, } from '@mui/material';
+// import RestoreIcon from '@mui/icons-material/Restore';
+// import FavoriteIcon from '@mui/icons-material/Favorite';
+// import LocationOnIcon from '@mui/icons-material/LocationOn';
+// import { useRouter } from 'next/router';

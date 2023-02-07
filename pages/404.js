@@ -1,8 +1,8 @@
-import { registerPushURL, registerSeconds } from "@/redux/utilsSlice";
 import { useRouter } from "next/router"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import Link from 'next/link';
+import { registerPushURL, registerSeconds } from "@/redux/utilsSlice";
 
 export default function NotFound() {
     const dispatch = useDispatch();
@@ -64,3 +64,11 @@ export default function NotFound() {
         </div>
     )
 }
+
+// import {
+//     useRouter,
+//     useEffect,
+//     useDispatch, useSelector,
+//     Link,
+// } from '@/Utils/export'
+

@@ -17,7 +17,7 @@ function MyApp({ Component, pageProps }) {
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <TopNavbar />
-        <WordOfGod color='white' size='2rem 10rem' />
+        <WordOfGod color='white' size='2rem 1rem' />
         <Component {...pageProps} />
         <FooterNavbar />
       </Provider>

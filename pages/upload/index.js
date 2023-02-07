@@ -1,20 +1,19 @@
-import { useEffect, useState } from "react";
 import {
-    ref,
-    uploadBytes,
-    getDownloadURL,
-} from "firebase/storage";
-import { Stack, Button, Typography } from '@mui/material';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { v4 } from "uuid";
-import { useDispatch, useSelector } from "react-redux";
-import { registerImageUploadBase } from "@/redux/uploadSlice";
-import { FileUploader } from "react-drag-drop-files";
-import Image from 'next/image'
-import styles from '@/styles/Home.module.css'
-import { useRouter } from "next/router";
-import { Box } from "@mui/system";
+    useEffect, useState,
+    useDispatch, useSelector,
+    Stack, Button, Typography,
+    ref, uploadBytes, getDownloadURL,
+    CloudUploadIcon,
+    v4,
+    FileUploader,
+    Image,
+    useRouter,
+    Box,
+} from '@/Utils/export'
+
 import { storage } from "@/Utils/firebase";
+import styles from '@/styles/Home.module.css'
+import { registerImageUploadBase } from "@/redux/uploadSlice";
 
 const displayTypes = ['engagement Display', 'pre-Wedding Display', 'marriage Display', 'post-Wedding Display']
 
@@ -46,6 +45,7 @@ function FirebaseUpload() {
 
     const handleUploadDisplay = (type) => {
         const folderDir = type.slice(0, -8).replace('-', '')
+        console.log(file?.name, 'file?.name', folderDir, 'folderDir')
         if (file?.name) {
             const imageRef = ref(storage, `display/${folderDir}/${v4().slice(0, 10)}`);
             uploadBytes(imageRef, file).then((snapshot) => {
@@ -99,14 +99,27 @@ function FirebaseUpload() {
                         </Button>
                     ))}{ }
                 </Stack>
+                <Stack spacing={4} direction="row" sx={{ margin: '7rem 0rem', display: 'block' }}>
+                    {displayTypes.map((type, i) => (
+                        <Button
+                            key={i + type}
+                            variant='contained'
+                            sx={{ minWidth: '16rem', padding: '1rem', margin: '2rem 1.2rem' }}
+                            onClick={() => handleUploadDisplay(type.trim())}
+                        >
+                            <CloudUploadIcon sx={{ margin: '0rem 1rem' }} />
+                            {type}
+                        </Button>
+                    ))}
+                </Stack>
                 {imageUploadBase.length ?
-                    <Image
+                    <img
                         className={styles.logo}
                         src={imageUploadBase}
                         alt="Uploaded Image"
-                        width={180}
-                        height={37}
-                        priority
+                        width={700}
+                        height={700}
+                    // priority
                     />
                     : null}
             </div>)
@@ -123,3 +136,19 @@ function FirebaseUpload() {
 }
 
 export default FirebaseUpload;
+
+
+// import { useEffect, useState } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { Stack, Button, Typography } from '@mui/material';
+// import {
+//     ref,
+//     uploadBytes,
+//     getDownloadURL,
+// } from "firebase/storage";
+// import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+// import { v4 } from "uuid";
+// import { FileUploader } from "react-drag-drop-files";
+// import Image from 'next/image'
+// import { useRouter } from "next/router";
+// import { Box } from "@mui/system";

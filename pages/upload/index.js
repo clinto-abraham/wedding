@@ -14,21 +14,23 @@ import {
 import { storage } from "@/Utils/firebase";
 import styles from '@/styles/Home.module.css'
 import { registerImageUploadBase } from "@/redux/uploadSlice";
+import UploadPageHOC from '@/hoc/uploadHOC';
 
-const displayTypes = ['engagement Display', 'pre-Wedding Display', 'marriage Display', 'post-Wedding Display']
+const displayTypes = ['engagement Display', 'preWedding Display', 'marriage Display', 'postWedding Display']
+const photoTypes = ['engagement', 'preWedding', 'marriage', 'postWedding']
 
 function FirebaseUpload() {
-    const { imageUploadBase, photoTilesTypes, fileTypes } = useSelector(state => state.uploads)
+    const { imageUploadBase, fileTypes } = useSelector(state => state.uploads)
     const [file, setFile] = useState(null);
     const dispatch = useDispatch();
-    const { user } = useSelector(state => state.user)
-    const router = useRouter();
+    // const { user } = useSelector(state => state.user)
+    // const router = useRouter();
 
-    useEffect(() => {
-        if (!user || user?.isAnonymous) {
-            router.push('/')
-        }
-    }, [user])
+    // useEffect(() => {
+    //     if (!user || user?.isAnonymous) {
+    //         router.push('/')
+    //     }
+    // }, [user])
 
     const handleUpload = (type) => {
         if (file?.name) {
@@ -62,80 +64,62 @@ function FirebaseUpload() {
     };
 
     return (<>
-        {user?.email === ('clinto92@gmail.com' || 'chippynt@gmail.com') ? (
-            <div className={styles.upload}>
-                <FileUploader
-                    handleChange={handleFileSelect}
-                    name='file'
-                    types={fileTypes}
-                    // multiple={true}
-                    dropMessageStyle={
-                        { backgroundColor: 'green' }
-                    }
-                    hoverTitle='After drag or drop or select file, do submit'
-                />
+        <div className={styles.upload}>
+            <FileUploader
+                handleChange={handleFileSelect}
+                name='file'
+                types={fileTypes}
+                // multiple={true}
+                dropMessageStyle={
+                    { backgroundColor: 'green' }
+                }
+                hoverTitle='After drag or drop or select file, do submit'
+            />
 
-                <Stack spacing={4} direction="row" sx={{ margin: '7rem 0rem', display: 'block' }}>
-                    {photoTilesTypes.map((type, i) => (
-                        <Button
-                            key={i + type}
-                            variant='contained'
-                            sx={{ minWidth: '16rem', padding: '1rem', margin: '2rem 1.2rem' }}
-                            onClick={() => handleUpload(type)}
-                        >
-                            <CloudUploadIcon sx={{ margin: '0rem 1rem' }} />
-                            {type}
-                        </Button>
-                    ))}
-                    {displayTypes.map((type, i) => (
-                        <Button
-                            key={i + type}
-                            variant='contained'
-                            sx={{ minWidth: '16rem', padding: '1rem', margin: '2rem 1.2rem' }}
-                            onClick={() => handleUploadDisplay(type.trim())}
-                        >
-                            <CloudUploadIcon sx={{ margin: '0rem 1rem' }} />
-                            {type}
-                        </Button>
-                    ))}{ }
-                </Stack>
-                <Stack spacing={4} direction="row" sx={{ margin: '7rem 0rem', display: 'block' }}>
-                    {displayTypes.map((type, i) => (
-                        <Button
-                            key={i + type}
-                            variant='contained'
-                            sx={{ minWidth: '16rem', padding: '1rem', margin: '2rem 1.2rem' }}
-                            onClick={() => handleUploadDisplay(type.trim())}
-                        >
-                            <CloudUploadIcon sx={{ margin: '0rem 1rem' }} />
-                            {type}
-                        </Button>
-                    ))}
-                </Stack>
-                {imageUploadBase.length ?
-                    <img
-                        className={styles.logo}
-                        src={imageUploadBase}
-                        alt="Uploaded Image"
-                        width={700}
-                        height={700}
-                    // priority
-                    />
-                    : null}
-            </div>)
-            : (<Box sx={{ margin: '16rem 0rem', padding: '0rem 10rem', display: 'block' }}>
-                <Typography variant='h3'>You are not authorized to upload or change any data. Thanks for visiting us! Go back to home page and enjoy the album and don't forget to comment.</Typography>
-                <Button fullWidth sx={{ margin: '2rem 1rem' }} variant='contained' size='large' onClick={() => router.push('/')}>
-                    Home
-                </Button>
-            </Box>
-            )
-        }
+            <Stack spacing={4} direction="row" sx={{ margin: '7rem 0rem', display: 'block' }}>
+                {photoTypes.map((type, i) => (
+                    <Button
+                        key={i + type}
+                        variant='contained'
+                        sx={{ minWidth: '16rem', padding: '1rem', margin: '2rem 1.2rem' }}
+                        onClick={() => handleUpload(type)}
+                    >
+                        <CloudUploadIcon sx={{ margin: '0rem 1rem' }} />
+                        {type}
+                    </Button>
+                ))}
+            </Stack>
+            <Stack spacing={4} direction="row" sx={{ margin: '7rem 0rem', display: 'block' }}>
+                {displayTypes.map((type, i) => (
+                    <Button
+                        key={i + type}
+                        variant='contained'
+                        sx={{ minWidth: '16rem', padding: '1rem', margin: '2rem 1.2rem' }}
+                        onClick={() => handleUploadDisplay(type.trim())}
+                    >
+                        <CloudUploadIcon sx={{ margin: '0rem 1rem' }} />
+                        {type}
+                    </Button>
+                ))}
+            </Stack>
+            {imageUploadBase.length ?
+                <img
+                    className={styles.logo}
+                    src={imageUploadBase}
+                    alt="Uploaded Image"
+                    width={700}
+                    height={700}
+                // priority
+                />
+                : null}
+        </div>
+
     </>
     );
 }
 
-export default FirebaseUpload;
+const EnhancedFirebaseUpload = () => UploadPageHOC(FirebaseUpload)
+export default EnhancedFirebaseUpload;
 
 
 // import { useEffect, useState } from "react";
@@ -152,3 +136,13 @@ export default FirebaseUpload;
 // import Image from 'next/image'
 // import { useRouter } from "next/router";
 // import { Box } from "@mui/system";
+
+// {user?.email === ('clinto92@gmail.com' || 'chippynt@gmail.com') ? (
+  //     : (<Box sx={{ margin: '16rem 0rem', padding: '0rem 10rem', display: 'block' }}>
+        //         <Typography variant='h3'>You are not authorized to upload or change any data. Thanks for visiting us! Go back to home page and enjoy the album and don't forget to comment.</Typography>
+        //         <Button fullWidth sx={{ margin: '2rem 1rem' }} variant='contained' size='large' onClick={() => router.push('/')}>
+        //             Home
+        //         </Button>
+        //     </Box>
+        //     )
+        // }

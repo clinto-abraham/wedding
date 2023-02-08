@@ -86,9 +86,6 @@ export default function Marriage() {
 //     listAll,
 // } from "firebase/storage";
 
-
-
-
                 // xs={12}
                 // sm={12}
                 // xl={6}

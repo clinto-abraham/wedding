@@ -51,7 +51,6 @@ export default function Marriage() {
     }, [localData])
 
     console.log('re-rendering checks in marriage')
-
     return (
         <Container>
             {isLoading ? <TilesSkeleton /> : (<>
@@ -87,3 +86,16 @@ export default function Marriage() {
 //     listAll,
 // } from "firebase/storage";
 
+
+
+
+                // xs={12}
+                // sm={12}
+                // xl={6}
+                // md={6}
+                // lg={6}
+            // xs={12 && dispatch(registerPhotoTileSize(12))}
+            // sm={12 && dispatch(registerPhotoTileSize(12))}
+            // xl={6 && dispatch(registerPhotoTileSize(6))}
+            // md={6 && dispatch(registerPhotoTileSize(6))}
+            // lg={6 && dispatch(registerPhotoTileSize(6))}

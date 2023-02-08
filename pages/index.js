@@ -1,12 +1,9 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux'
 import {
-  ref,
-  getDownloadURL,
-  listAll,
-} from "firebase/storage";
-import { Grid } from '@mui/material';
-
+  useEffect,
+  useDispatch, useSelector,
+  Grid,
+  ref, getDownloadURL, listAll,
+} from '@/Utils/export'
 import styles from '@/styles/Home.module.css'
 import { Header } from '@/components/Header'
 import { storage } from "@/Utils/firebase";
@@ -24,6 +21,7 @@ const imageRefs = (props) => ref(storage, `display/${props}`);
 export default function Home() {
   const { displayTypes } = useSelector(state => state.uploads)
   const dispatch = useDispatch();
+  const { chippy, chippyFamily, chippyEdu, clinto, clintoFamily, clintoEdu } = useSelector(state => state.story)
 
   const fetchPhotos = (imagesListRef) => {
     listAll(imagesListRef).then((response) => {
@@ -65,30 +63,24 @@ export default function Home() {
           <Logo className={'thirteen'} />
         </div>
         <Grid container spacing={2}>
-          <PhotoTilesNavbar
-            type='pre-WeddingDisplay'
-          />
-          <PhotoTilesNavbar
-            type='engagementDisplay'
-          />
-          <PhotoTilesNavbar
-            type='marriageDisplay'
-          />
-          <PhotoTilesNavbar
-            type='post-WeddingDisplay'
-          />
+          <PhotoTilesNavbar type='pre-WeddingDisplay' intro={clinto} family={clintoFamily} edu={clintoEdu} />
+          <PhotoTilesNavbar type='engagementDisplay' intro={chippy} family={chippyFamily} edu={chippyEdu} />
+          <PhotoTilesNavbar type='marriageDisplay' intro={chippy} family={chippyFamily} edu={chippyEdu} />
+          <PhotoTilesNavbar type='post-WeddingDisplay' intro={clinto} family={clintoFamily} edu={clintoEdu} />
         </Grid>
       </main>
     </>
   )
 }
 
+// import { useEffect } from 'react';
+// import { useSelector, useDispatch } from 'react-redux'
 // import {
-//   useEffect,
-//   useDispatch, useSelector,
-//   Grid,
-//   ref, getDownloadURL, listAll,
-// } from '@/Utils/export'
+//   ref,
+//   getDownloadURL,
+//   listAll,
+// } from "firebase/storage";
+// import { Grid } from '@mui/material';
 
 
 

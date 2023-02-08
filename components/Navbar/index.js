@@ -29,6 +29,7 @@ const TopNavbar = () => {
     useEffect(() => {
         dispatch(registerRendering(render + 1))
     }, [])
+
     const handlePageNavigation = page => {
         router.push(page)
     };
@@ -70,7 +71,7 @@ const TopNavbar = () => {
     }
 
     return (
-        <AppBar position="static" color='transparent' sx={{ padding: '1rem', margin: '2rem 0rem' }}>
+        <AppBar position='static' color='transparent' sx={{ padding: '1rem', margin: '2rem 0rem' }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
 

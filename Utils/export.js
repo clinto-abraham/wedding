@@ -58,6 +58,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import { v4 } from "uuid";
 import { FileUploader } from "react-drag-drop-files";
 import Image from 'next/image'
+import { useSnackbar } from 'notistack';
 // import { onAuthStateChanged } from "firebase/auth";
 
 export {
@@ -79,4 +80,5 @@ export {
     createSlice,
     useQuery,
     FileUploader,
+    useSnackbar,
 }

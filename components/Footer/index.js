@@ -21,6 +21,55 @@ const FooterNavbar = () => {
 
     return (
         <>
+            <Grid container sx={{ padding: '2.2rem 1.2rem' }}>
+                <Grid item xs={6} sm={6} lg={4} md={4} >
+
+                    <Typography>Privacy & Policy</Typography>
+                </Grid>
+                <Grid item xs={6} sm={6} lg={4} md={4} >
+                    <Link
+                        href="https://clinto.netlify.app/"
+                    >
+                        <Typography>Contact</Typography>
+
+                    </Link>
+                </Grid>
+                <Grid item xs={6} sm={6} lg={4} md={4} >
+                    <Typography>Comments</Typography>
+                </Grid>
+
+                <Grid item xs={6} sm={6} lg={4} md={4} >
+
+                    <Typography>Terms & Conditions</Typography>
+                </Grid>
+                <Grid item xs={6} sm={6} lg={4} md={4} >
+                    <Link
+                        href="https://clinto.netlify.app/"
+                    >
+                        <Typography>Favorites</Typography>
+
+                    </Link>
+                </Grid>
+                <Grid item xs={6} sm={6} lg={4} md={4} >
+                    <Typography>About us</Typography>
+                </Grid>
+
+                <Grid item xs={6} sm={6} lg={4} md={4} >
+
+                    <Typography>Github</Typography>
+                </Grid>
+                <Grid item xs={6} sm={6} lg={4} md={4} >
+                    <Link
+                        href="https://clinto.netlify.app/"
+                    >
+                        <Typography>Linkedin</Typography>
+
+                    </Link>
+                </Grid>
+                <Grid item xs={6} sm={6} lg={4} md={4} >
+                    <Typography>Twitter</Typography>
+                </Grid>
+            </Grid>
             <Box sx={{ width: '100%' }}>
                 <BottomNavigation
                     showLabels
@@ -48,6 +97,7 @@ const FooterNavbar = () => {
                     </Grid>
                     <Grid item xs={4} />
                 </Box>
+
             </Box>
         </>
     )

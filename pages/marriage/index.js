@@ -5,13 +5,16 @@ import {
 import { registerMarriage } from '@/redux/uploadSlice';
 import useFetchFirebase from '@/hooks/useFetchFirebase';
 import TilesSkeleton from '@/components/Skeletons/Tiles';
+import BottomPictureBar from '@/components/BottomPictureBar';
+
 
 export default function Marriage() {
     const { isLoading, isInitialLoading } = useFetchFirebase({
         type: 'marriage',
         register: registerMarriage
     })
-    const { marriage } = useSelector(state => state.uploads);
+    const { marriage, stock } = useSelector(state => state.uploads);
+
     return (
         <Container>
             {(isInitialLoading || isLoading) ?
@@ -21,20 +24,22 @@ export default function Marriage() {
                     <Typography variant='caption' align='center'>22nd May 2022</Typography>
                     <ImageList variant="masonry" cols={1} gap={8}>
 
-                        {marriage.map((pic, index) => (
-                            <ImageListItem key={index} onClick={() => console.log("clicked image list", pic)}>
+                        {(marriage || stock).map((pic, index) => (
+                            <ImageListItem key={index}>
                                 <img
                                     src={`${pic}?w=248&fit=crop&auto=format`}
                                     srcSet={`${pic}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                    alt={pic ? pic.slice(3) : 'some-pic'}
+                                    alt={pic ? pic.slice(100, 110) : 'some-pic'}
                                     loading="lazy"
                                     key={index}
                                 />
+                                <BottomPictureBar pic={pic} type={'marriage'} />
                             </ImageListItem>
                         ))}
                     </ImageList>
-                </>)}
-        </Container>
+                </>)
+            }
+        </Container >
     );
 }
 

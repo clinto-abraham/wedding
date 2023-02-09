@@ -5,6 +5,7 @@ import {
 import { registerEngagement } from '@/redux/uploadSlice';
 import useFetchFirebase from '@/hooks/useFetchFirebase';
 import TilesSkeleton from '@/components/Skeletons/Tiles';
+import BottomPictureBar from '@/components/BottomPictureBar';
 
 export default function Engagement() {
     const { isLoading, isInitialLoading } = useFetchFirebase({
@@ -30,6 +31,7 @@ export default function Engagement() {
                                     loading="lazy"
                                     key={index}
                                 />
+                                <BottomPictureBar pic={pic} type={'engagement'} />
                             </ImageListItem>
                         ))}
                     </ImageList>

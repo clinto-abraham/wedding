@@ -13,7 +13,7 @@ const initialState = {
     marriageDisplay: [],
     postWeddingDisplay: [],
     displayTypes: ['engagement', 'preWedding', 'marriage', 'postWedding'],
-
+    stock: ['https://firebasestorage.googleapis.com/v0/b/wedding-clinto-chippy.appspot.com/o/images%2Fengagement%2F0f0dd7ef-9f19-4762-b1f1-58ecc229d79cSCS(965).JPG?alt=media&token=88de836f-b8ad-4e0f-9c68-0d7ac8a1a0a']
 }
 
 export const uploadSlice = createSlice({

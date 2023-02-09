@@ -15,10 +15,13 @@ import {
 } from "@/redux/uploadSlice";
 import Logo from '@/components/Logo';
 import PhotoTilesNavbar from '@/components/PhotoTiles';
+// import useDisplayPic from '@/hooks/useDisplayPic';
+import TilesSkeleton from '@/components/Skeletons/Tiles';
 
 const imageRefs = (props) => ref(storage, `display/${props}`);
 
 export default function Home() {
+  // const { isLoading, isInitialLoading } = useDisplayPic()
   const { displayTypes } = useSelector(state => state.uploads)
   const dispatch = useDispatch();
   const { chippy, chippyFamily, chippyEdu, clinto, clintoFamily, clintoEdu } = useSelector(state => state.story)
@@ -62,12 +65,14 @@ export default function Home() {
         <div className={styles.center}>
           <Logo className={'thirteen'} />
         </div>
+        {/* {(isInitialLoading || isLoading) ? (<TilesSkeleton />) : ( */}
         <Grid container spacing={2}>
           <PhotoTilesNavbar type='pre-WeddingDisplay' intro={clinto} family={clintoFamily} edu={clintoEdu} />
           <PhotoTilesNavbar type='engagementDisplay' intro={chippy} family={chippyFamily} edu={chippyEdu} />
           <PhotoTilesNavbar type='marriageDisplay' intro={chippy} family={chippyFamily} edu={chippyEdu} />
           <PhotoTilesNavbar type='post-WeddingDisplay' intro={clinto} family={clintoFamily} edu={clintoEdu} />
         </Grid>
+        {/* )} */}
       </main>
     </>
   )

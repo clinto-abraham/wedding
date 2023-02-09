@@ -13,6 +13,7 @@ import { registerUser } from '@/redux/loginSlice';
 import { initialLocalState } from '@/Utils/userInitialData';
 import { registerRendering } from '@/redux/utilsSlice';
 import Logo from '../Logo';
+// import GoHome from '../NavigateButton';
 const UserNavList = ['profile', 'message', 'logout', 'upload'];
 
 const TopNavbar = () => {
@@ -70,9 +71,11 @@ const TopNavbar = () => {
         setAnchorElNav(null);
     }
 
-    return (
+    return (<>
         <AppBar position='static' color='transparent' sx={{ padding: '1rem', margin: '2rem 0rem' }}>
+
             <Container maxWidth="xl">
+                {/* <GoHome /> */}
                 <Toolbar disableGutters>
 
                     <Typography
@@ -95,6 +98,7 @@ const TopNavbar = () => {
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -134,6 +138,7 @@ const TopNavbar = () => {
                                 </MenuItem>
                             ))}
                         </Menu>
+
                     </Box>
                     <Link href='/'>
                         <Logo />
@@ -197,6 +202,7 @@ const TopNavbar = () => {
                 </Toolbar>
             </Container>
         </AppBar>
+    </>
     );
 };
 export default TopNavbar;

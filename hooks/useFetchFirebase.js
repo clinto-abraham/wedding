@@ -23,7 +23,8 @@ const useFetchFirebase = ({ type, register }) => {
         queryKey: [type],
         queryFn: () => fetchPhotos(imageRefs(type)),
         cacheTime: 6000000,
-        staleTime: 6000000
+        staleTime: 6000000,
+        retryOnMount: false
     })
 
     useEffect(() => {
@@ -56,10 +57,7 @@ const useFetchFirebase = ({ type, register }) => {
             enqueueSnackbar(status, { variant: 'info' });
         }
 
-        if (reduxTool[type].length < 1) {
-            enqueueSnackbar('There are no data on this page, kindly return back to another page!', { variant: 'error' });
-        }
-    }, [isError, isSuccess])
+    }, [isError, isSuccess, status])
 
     return {
         isLoading,

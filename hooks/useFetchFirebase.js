@@ -57,9 +57,6 @@ const useFetchFirebase = ({ type, register }) => {
             enqueueSnackbar(status, { variant: 'info' });
         }
 
-        // if (reduxTool[type].length < 1) {
-        //     enqueueSnackbar('There are no data on this page, kindly return back to another page!', { variant: 'error' });
-        // }
     }, [isError, isSuccess, status])
 
     return {

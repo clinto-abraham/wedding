@@ -6,7 +6,8 @@ const initialState = {
     color: 'white',
     selected: false,
     render: 0,
-    verse: 0
+    verse: 0,
+    progress: 0
 }
 
 export const utilsSlice = createSlice({
@@ -31,9 +32,12 @@ export const utilsSlice = createSlice({
         registerVerse: (state, action) => {
             state.verse = action.payload;
         },
+        registerProgress: (state, action) => {
+            state.progress = action.payload;
+        },
     }
 })
 
-export const { registerSeconds, registerPushURL, registerColor, registerSelected, registerRendering, registerVerse } = utilsSlice.actions
+export const { registerSeconds, registerPushURL, registerColor, registerSelected, registerRendering, registerVerse, registerProgress, } = utilsSlice.actions
 
 export default utilsSlice.reducer;

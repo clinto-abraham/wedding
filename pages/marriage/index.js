@@ -6,12 +6,13 @@ import { registerMarriage } from '@/redux/uploadSlice';
 import useFetchFirebase from '@/hooks/useFetchFirebase';
 import TilesSkeleton from '@/components/Skeletons/Tiles';
 import BottomPictureBar from '@/components/BottomPictureBar';
-
+const type = 'marriage';
 
 export default function Marriage() {
     const { isLoading, isInitialLoading } = useFetchFirebase({
-        type: 'marriage',
-        register: registerMarriage
+        type,
+        register: registerMarriage,
+        folder: 'images'
     })
     const { marriage, stock } = useSelector(state => state.uploads);
 
@@ -33,7 +34,7 @@ export default function Marriage() {
                                     loading="lazy"
                                     key={index}
                                 />
-                                <BottomPictureBar pic={pic} type={'marriage'} />
+                                <BottomPictureBar pic={pic} type={type} />
                             </ImageListItem>
                         ))}
                     </ImageList>

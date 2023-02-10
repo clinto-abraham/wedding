@@ -6,13 +6,13 @@ import {
     useSnackbar
 } from '@/Utils/export'
 import { storage } from "@/Utils/firebase";
-const imageRefs = (props) => ref(storage, `images/${props}`);
 
-const useFetchFirebase = ({ type, register }) => {
+const useFetchFirebase = ({ type, register, folder }) => {
     const reduxTool = useSelector(state => state.uploads);
     const dispatch = useDispatch();
     const [localData, setLocalData] = useState([])
     const { enqueueSnackbar } = useSnackbar();
+    const imageRefs = (props) => ref(storage, `${folder}/${props}`);
     const fetchPhotos = async (imagesListRef) => {
         return await listAll(imagesListRef).then((response) => {
             return response.items
@@ -46,18 +46,28 @@ const useFetchFirebase = ({ type, register }) => {
 
 
     useEffect(() => {
+        let timeout = true
         if (isError) {
-            enqueueSnackbar(error, { variant: 'error' });
+            enqueueSnackbar(`ERROR FOR ${type.toUpperCase()} : ${error} `, { variant: 'error' });
+        }
+        if (status) {
+            enqueueSnackbar(`STATUS : ${status.toUpperCase()} FOR ${type.toUpperCase()}`, { variant: 'info' });
         }
         if (isSuccess) {
-            enqueueSnackbar('Successfully loaded data. Please enjoy the photos!', { variant: 'success' });
+            if (reduxTool[type].length > 0) {
+                enqueueSnackbar('Successfully loaded data. Please enjoy the photos!', { variant: 'success' });
+            }
+            if (data.length === 0 && status === 'success') {
+                if (timeout) {
+                    setTimeout(() => {
+                        enqueueSnackbar('There are no photos in this gallery, please navigate to another page!', { variant: 'error' });
+                    }, 2000)
+                }
+            }
+            return () => timeout = false;
         }
 
-        if (status) {
-            enqueueSnackbar(status, { variant: 'info' });
-        }
-
-    }, [isError, isSuccess, status])
+    }, [isError, isSuccess, status, reduxTool[type].length])
 
     return {
         isLoading,

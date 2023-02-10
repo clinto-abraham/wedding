@@ -6,11 +6,13 @@ import { registerPostWedding } from '@/redux/uploadSlice';
 import useFetchFirebase from '@/hooks/useFetchFirebase';
 import TilesSkeleton from '@/components/Skeletons/Tiles';
 import BottomPictureBar from '@/components/BottomPictureBar';
+const type = 'postWedding';
 
 export default function PostWedding() {
     const { isLoading, isInitialLoading } = useFetchFirebase({
-        type: 'postWedding',
+        type,
         register: registerPostWedding,
+        folder: 'images'
     })
     const { postWedding } = useSelector(state => state.uploads)
     return (
@@ -31,7 +33,7 @@ export default function PostWedding() {
                                     loading="lazy"
                                     key={index}
                                 />
-                                <BottomPictureBar pic={pic} type={'postWedding'} />
+                                <BottomPictureBar pic={pic} type={type} />
                             </ImageListItem>
                         ))}
                     </ImageList>

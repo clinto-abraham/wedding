@@ -1,12 +1,13 @@
 import {
-  useEffect,
-  useDispatch, useSelector,
+  // useEffect,
+  // useDispatch, 
+  useSelector,
   Grid,
-  ref, getDownloadURL, listAll,
+  // ref, getDownloadURL, listAll,
 } from '@/Utils/export'
 import styles from '@/styles/Home.module.css'
 import { Header } from '@/components/Header'
-import { storage } from "@/Utils/firebase";
+// import { storage } from "@/Utils/firebase";
 import {
   registerDisplayEngagement,
   registerDisplayPreWedding,
@@ -16,47 +17,50 @@ import {
 import Logo from '@/components/Logo';
 import PhotoTilesNavbar from '@/components/PhotoTiles';
 // import useDisplayPic from '@/hooks/useDisplayPic';
-import TilesSkeleton from '@/components/Skeletons/Tiles';
 
-const imageRefs = (props) => ref(storage, `display/${props}`);
+import TilesSkeleton from '@/components/Skeletons/Tiles';
+// import useFetchFirebase from '@/hooks/useFetchFirebase';
+// const imageRefs = (props) => ref(storage, `display/${props}`);
 
 export default function Home() {
-  // const { isLoading, isInitialLoading } = useDisplayPic()
-  const { displayTypes } = useSelector(state => state.uploads)
-  const dispatch = useDispatch();
+
+
   const { chippy, chippyFamily, chippyEdu, clinto, clintoFamily, clintoEdu } = useSelector(state => state.story)
+  // const dispatch = useDispatch();
+  // const { isLoading, isInitialLoading } = useDisplayPic()
+  // const { displayTypes } = useSelector(state => state.uploads)
 
-  const fetchPhotos = (imagesListRef) => {
-    listAll(imagesListRef).then((response) => {
-      const convertIntoURL = (register) => {
-        response.items.forEach((item) => {
-          getDownloadURL(item).then((url) => {
-            dispatch(register(url))
-          });
-        });
-      }
-      const responseSearch = (param) => response?.items[0]?._location?.path_?.search(param)
-      if (responseSearch(displayTypes[0]) > 0) {
-        convertIntoURL(registerDisplayEngagement)
-      }
-      if (responseSearch(displayTypes[1]) > 0) {
-        convertIntoURL(registerDisplayPreWedding)
-      }
-      if (responseSearch(displayTypes[2]) > 0) {
-        convertIntoURL(registerDisplayMarriage)
-      }
-      if (responseSearch(displayTypes[3]) > 0) {
-        convertIntoURL(registerDisplayPostWedding)
-      }
-    });
-  }
+  // const fetchPhotos = (imagesListRef) => {
+  //   listAll(imagesListRef).then((response) => {
+  //     const convertIntoURL = (register) => {
+  //       response.items.forEach((item) => {
+  //         getDownloadURL(item).then((url) => {
+  //           dispatch(register(url))
+  //         });
+  //       });
+  //     }
+  //     const responseSearch = (param) => response?.items[0]?._location?.path_?.search(param)
+  //     if (responseSearch(displayTypes[0]) > 0) {
+  //       convertIntoURL(registerDisplayEngagement)
+  //     }
+  //     if (responseSearch(displayTypes[1]) > 0) {
+  //       convertIntoURL(registerDisplayPreWedding)
+  //     }
+  //     if (responseSearch(displayTypes[2]) > 0) {
+  //       convertIntoURL(registerDisplayMarriage)
+  //     }
+  //     if (responseSearch(displayTypes[3]) > 0) {
+  //       convertIntoURL(registerDisplayPostWedding)
+  //     }
+  //   });
+  // }
 
-  useEffect(() => {
-    fetchPhotos(imageRefs(displayTypes[0]));
-    fetchPhotos(imageRefs(displayTypes[1]));
-    fetchPhotos(imageRefs(displayTypes[2]));
-    fetchPhotos(imageRefs(displayTypes[3]));
-  }, []);
+  // useEffect(() => {
+  //   fetchPhotos(imageRefs(displayTypes[0]));
+  //   fetchPhotos(imageRefs(displayTypes[1]));
+  //   fetchPhotos(imageRefs(displayTypes[2]));
+  //   fetchPhotos(imageRefs(displayTypes[3]));
+  // }, []);
 
   return (
     <>
@@ -67,10 +71,10 @@ export default function Home() {
         </div>
         {/* {(isInitialLoading || isLoading) ? (<TilesSkeleton />) : ( */}
         <Grid container spacing={2}>
-          <PhotoTilesNavbar type='pre-WeddingDisplay' intro={clinto} family={clintoFamily} edu={clintoEdu} />
-          <PhotoTilesNavbar type='engagementDisplay' intro={chippy} family={chippyFamily} edu={chippyEdu} />
-          <PhotoTilesNavbar type='marriageDisplay' intro={chippy} family={chippyFamily} edu={chippyEdu} />
-          <PhotoTilesNavbar type='post-WeddingDisplay' intro={clinto} family={clintoFamily} edu={clintoEdu} />
+          <PhotoTilesNavbar type='pre-WeddingDisplay' register={registerDisplayPreWedding} intro={clinto} family={clintoFamily} edu={clintoEdu} />
+          <PhotoTilesNavbar type='engagementDisplay' register={registerDisplayEngagement} intro={chippy} family={chippyFamily} edu={chippyEdu} />
+          <PhotoTilesNavbar type='marriageDisplay' register={registerDisplayMarriage} intro={chippy} family={chippyFamily} edu={chippyEdu} />
+          <PhotoTilesNavbar type='post-WeddingDisplay' register={registerDisplayPostWedding} intro={clinto} family={clintoFamily} edu={clintoEdu} />
         </Grid>
         {/* )} */}
       </main>
@@ -121,10 +125,3 @@ export default function Home() {
 //   loading: () => <Skeleton />,
 // })
 
-// const DynamicPhotoTilesNavbar = dynamic(() => import('@/components/PhotoTiles'), {
-//   loading: () => (<>
-//     <Skeleton variant="rectangular" width={210} height={118} />
-//     <Skeleton />
-//     <Skeleton width="60%" />
-//   </>),
-// })

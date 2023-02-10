@@ -6,11 +6,13 @@ import { registerEngagement } from '@/redux/uploadSlice';
 import useFetchFirebase from '@/hooks/useFetchFirebase';
 import TilesSkeleton from '@/components/Skeletons/Tiles';
 import BottomPictureBar from '@/components/BottomPictureBar';
+const type = 'engagement';
 
 export default function Engagement() {
     const { isLoading, isInitialLoading } = useFetchFirebase({
-        type: 'engagement',
-        register: registerEngagement
+        type,
+        register: registerEngagement,
+        folder: 'images'
     })
     const { engagement } = useSelector(state => state.uploads)
     return (
@@ -27,11 +29,11 @@ export default function Engagement() {
                                 <img
                                     src={`${pic}?w=248&fit=crop&auto=format`}
                                     srcSet={`${pic}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                    alt={pic ? pic.slice(3) : 'some-pic'}
+                                    alt={pic ? pic.slice(100, 110) : 'some-pic'}
                                     loading="lazy"
                                     key={index}
                                 />
-                                <BottomPictureBar pic={pic} type={'engagement'} />
+                                <BottomPictureBar pic={pic} type={type} />
                             </ImageListItem>
                         ))}
                     </ImageList>

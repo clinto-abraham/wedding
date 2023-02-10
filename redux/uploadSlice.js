@@ -51,6 +51,13 @@ export const uploadSlice = createSlice({
             state.postWeddingDisplay.shift()
             state.postWeddingDisplay.push(action.payload);
         },
+        registerDelete: (state, action) => {
+            const { type, index } = action.payload;
+            if (index > -1) { // only splice array when item is found
+                state[type].splice(index, 1) // 2nd parameter means remove one item only
+            }
+
+        },
     }
 })
 
@@ -63,7 +70,8 @@ export const {
     registerDisplayEngagement,
     registerDisplayPreWedding,
     registerDisplayMarriage,
-    registerDisplayPostWedding
+    registerDisplayPostWedding,
+    registerDelete
 } = uploadSlice.actions
 
 export default uploadSlice.reducer;

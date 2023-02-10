@@ -150,6 +150,7 @@ const TopNavbar = () => {
                             <Button
                                 key={page}
                                 onClick={() => handlePageNavigation(page)}
+                                fullWidth
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
                                 {page}
@@ -187,7 +188,7 @@ const TopNavbar = () => {
                             </MenuItem>
                             {UserNavList.map(list => (
                                 <MenuItem key={list}>
-                                    <Button onClick={() => handleDropDownSelect(list)}>
+                                    <Button fullWidth onClick={() => handleDropDownSelect(list)}>
                                         {list.toUpperCase()}
                                         {!user || user?.isAnonymous ? (
                                             <Icon color='secondary'>

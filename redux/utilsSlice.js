@@ -7,7 +7,8 @@ const initialState = {
     selected: false,
     render: 0,
     verse: 0,
-    progress: 0
+    progress: 0,
+    page: 1
 }
 
 export const utilsSlice = createSlice({
@@ -35,9 +36,12 @@ export const utilsSlice = createSlice({
         registerProgress: (state, action) => {
             state.progress = action.payload;
         },
+        registerPage: (state, action) => {
+            state.page = action.payload;
+        },
     }
 })
 
-export const { registerSeconds, registerPushURL, registerColor, registerSelected, registerRendering, registerVerse, registerProgress, } = utilsSlice.actions
+export const { registerSeconds, registerPushURL, registerColor, registerSelected, registerRendering, registerVerse, registerProgress, registerPage } = utilsSlice.actions
 
 export default utilsSlice.reducer;

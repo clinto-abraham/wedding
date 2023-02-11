@@ -6,7 +6,11 @@ import { registerEngagement } from '@/redux/uploadSlice';
 import useFetchFirebase from '@/hooks/useFetchFirebase';
 import TilesSkeleton from '@/components/Skeletons/Tiles';
 import BottomPictureBar from '@/components/BottomPictureBar';
+import YouTubeVideo from '@/components/Youtube';
+import PaginationFirebaseFetch from '@/components/Paginations';
 const type = 'engagement';
+
+// 'https://youtube.com/shorts/PWrpFq6Pg8I?feature=share'
 
 export default function Engagement() {
     const { isLoading, isInitialLoading } = useFetchFirebase({
@@ -17,10 +21,12 @@ export default function Engagement() {
     const { engagement } = useSelector(state => state.uploads)
     return (
         <Container>
+            <Typography variant='h5' align='center' sx={{ margin: '2rem 0rem' }}>Engagement Day</Typography>
+            <YouTubeVideo ID='PWrpFq6Pg8I' />
             {(isInitialLoading || isLoading) ?
                 <TilesSkeleton /> :
                 (<>
-                    <Typography variant='h3' align='center'>Engagement Day</Typography>
+                    <Typography variant='h5' align='center' sx={{ margin: '2rem 0rem' }}>Photos</Typography>
                     <Typography variant='caption' align='center'>22nd May 2022</Typography>
                     <ImageList variant="masonry" cols={1} gap={8}>
 
@@ -37,6 +43,7 @@ export default function Engagement() {
                             </ImageListItem>
                         ))}
                     </ImageList>
+                    <PaginationFirebaseFetch />
                 </>)}
         </Container>
     );

@@ -20,7 +20,7 @@ export default function PostWedding() {
     return (
         <Container>
             <Typography variant='h5' align='center' sx={{ margin: '2rem 0rem' }}>Post - Wedding Celebration</Typography>
-            <YouTubeVideo />
+            <YouTubeVideo ID='_ZgPMqGB2Fs' />
             {(isInitialLoading || isLoading) ?
                 <TilesSkeleton /> :
                 (<>

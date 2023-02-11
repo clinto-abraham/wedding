@@ -3,7 +3,7 @@ import {
     Grid, Button,
 } from '@/Utils/export'
 import YouTube from "react-youtube";
-const YouTubeVideo = () => {
+const YouTubeVideo = ({ ID }) => {
     const [height, setHeight] = useState(490)
     const [width, setWidth] = useState(350)
 
@@ -36,7 +36,7 @@ const YouTubeVideo = () => {
 
             <Grid item xs={12} sm={12} md={12} lg={12}>
                 <YouTube
-                    videoId="_ZgPMqGB2Fs"
+                    videoId={ID}
                     opts={opts}
                     onReady={handleOnReady}
                 />

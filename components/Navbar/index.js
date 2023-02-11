@@ -4,7 +4,7 @@ import {
     useDispatch, useSelector,
     useState, useEffect,
     Icon, AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem,
-    MenuIcon, LockPersonIcon,
+    MenuIcon, LockPersonIcon, VpnKeyOffIcon,
 } from '@/Utils/export'
 
 import SignIn from '../SignIn';
@@ -14,7 +14,7 @@ import { initialLocalState } from '@/Utils/userInitialData';
 import { registerRendering } from '@/redux/utilsSlice';
 import Logo from '../Logo';
 // import GoHome from '../NavigateButton';
-const UserNavList = ['profile', 'message', 'logout', 'upload'];
+const UserNavList = ['profile', 'message', 'upload'];
 
 const TopNavbar = () => {
     const router = useRouter()
@@ -198,6 +198,11 @@ const TopNavbar = () => {
                                     </Button>
                                 </MenuItem>
                             ))}
+                            <MenuItem>
+                                <Button fullWidth onClick={() => handleDropDownSelect('logout')}>
+                                    Sign Out <VpnKeyOffIcon />
+                                </Button>
+                            </MenuItem>
                         </Menu>
                     </Box>
                 </Toolbar>

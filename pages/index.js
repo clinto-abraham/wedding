@@ -12,6 +12,8 @@ import {
 } from "@/redux/uploadSlice";
 import Logo from '@/components/Logo';
 import PhotoTilesNavbar from '@/components/PhotoTiles';
+import YouTubeVideo from '@/components/Youtube';
+// 'https://youtu.be/e-3YiD2Y5Z4'
 
 export default function Home() {
   const { chippy, chippyFamily, chippyEdu, clinto, clintoFamily, clintoEdu } = useSelector(state => state.story)
@@ -27,6 +29,9 @@ export default function Home() {
           <PhotoTilesNavbar type='engagementDisplay' register={registerDisplayEngagement} intro={chippy} family={chippyFamily} edu={chippyEdu} />
           <PhotoTilesNavbar type='marriageDisplay' register={registerDisplayMarriage} intro={chippy} family={chippyFamily} edu={chippyEdu} />
           <PhotoTilesNavbar type='post-WeddingDisplay' register={registerDisplayPostWedding} intro={clinto} family={clintoFamily} edu={clintoEdu} />
+        </Grid>
+        <Grid container spacing={2}>
+          <YouTubeVideo ID='e-3YiD2Y5Z4' />
         </Grid>
       </main>
     </>

@@ -76,7 +76,6 @@ const TopNavbar = () => {
             <Container maxWidth="xl">
                 {/* <GoHome /> */}
                 <Toolbar disableGutters>
-
                     <Typography
                         variant="h2"
                         noWrap
@@ -93,11 +92,9 @@ const TopNavbar = () => {
                         <Link href='/'>
                             Clinto & Chippy
                         </Link>
-
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -108,7 +105,6 @@ const TopNavbar = () => {
                         >
                             <MenuIcon />
                         </IconButton>
-
                         <Menu
                             id="menu-appbar"
                             anchorEl={anchorElNav}
@@ -137,13 +133,10 @@ const TopNavbar = () => {
                                 </MenuItem>
                             ))}
                         </Menu>
-
                     </Box>
                     <Link href='/'>
                         <Logo />
                     </Link>
-
-
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {photoTilesTypes.map((page) => (
                             <Button

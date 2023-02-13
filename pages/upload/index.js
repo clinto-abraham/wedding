@@ -34,6 +34,10 @@ const metadata = {
     contentType: 'image/jpg'
 };
 
+const MB = 1000000
+const rounded = (number) => {
+   return Math.round(number/MB * 5) / 5
+}
 function FirebaseUpload() {
     const { imageUploadBase, fileTypes } = useSelector(state => state.uploads)
     const [file, setFile] = useState(null);
@@ -53,7 +57,7 @@ function FirebaseUpload() {
                         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
                         const progressTrack = Math.floor((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
                         dispatch(registerProgress(progressTrack))
-                        enqueueSnackbar('Upload is ' + progressTrack + '% done', { variant: 'success' })
+                        enqueueSnackbar(rounded(snapshot.bytesTransferred) + 'MB out of ' + rounded(snapshot.totalBytes) + 'MB are uploaded successfully!', { variant: 'success' })
                         switch (snapshot.state) {
                             case 'paused':
                                 enqueueSnackbar('Upload is paused', { variant: 'warning' })
@@ -66,31 +70,22 @@ function FirebaseUpload() {
                         }
                     },
                     (error) => {
-                        // A full list of error codes is available at
-                        // https://firebase.google.com/docs/storage/web/handle-errors
                         switch (error.code) {
                             case 'storage/unauthorized':
-                                // User doesn't have permission to access the object
                                 enqueueSnackbar("User doesn't have permission to access the object", { variant: 'error' })
                                 console.log("User doesn't have permission to access the object")
                                 break;
                             case 'storage/canceled':
-                                // User canceled the upload
                                 enqueueSnackbar("User canceled the upload", { variant: 'error' })
                                 console.log("User canceled the upload")
                                 break;
-
-                            // ...
-
                             case 'storage/unknown':
-                                // Unknown error occurred, inspect error.serverResponse
                                 enqueueSnackbar("Unknown error occurred, inspect error.serverResponse", { variant: 'error' })
                                 console.log("Unknown error occurred, inspect error.serverResponse", error.serverResponse)
                                 break;
                         }
                     },
                     () => {
-                        // Upload completed successfully, now we can get the download URL
                         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                             console.log(`File available at ${type}`, downloadURL);
                             enqueueSnackbar(`File available at ${type} page`, { variant: 'success' })
@@ -99,11 +94,8 @@ function FirebaseUpload() {
                         });
                     }
                 );
-
-                //  redo below code
                 uploadBytes(storageRef, file).then((snapshot) => {
                     getDownloadURL(snapshot.ref).then((url) => {
-                        // setImageUrls((prev) => [...prev, url]);
                         dispatch(registerImageUploadBase(url))
                         setFile(null)
                     });
@@ -185,9 +177,9 @@ function FirebaseUpload() {
                             MenuProps={MenuProps}
                         >
                             {names.map((name) => (
-                                <MenuItem key={name} value={name}>
+                                <MenuItem key={name} value={name.toUpperCase()}>
                                     <Checkbox checked={categoryType.indexOf(name) > -1} />
-                                    <ListItemText primary={name} />
+                                    <ListItemText primary={name.toUpperCase()} />
                                 </MenuItem>
                             ))}
                         </Select>

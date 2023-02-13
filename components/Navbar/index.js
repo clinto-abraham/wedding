@@ -13,7 +13,6 @@ import { registerUser } from '@/redux/loginSlice';
 import { initialLocalState } from '@/Utils/userInitialData';
 import { registerRendering } from '@/redux/utilsSlice';
 import Logo from '../Logo';
-// import GoHome from '../NavigateButton';
 const UserNavList = ['profile', 'message', 'upload'];
 
 const TopNavbar = () => {
@@ -199,9 +198,11 @@ const TopNavbar = () => {
                                 </MenuItem>
                             ))}
                             <MenuItem>
+                            {user && !user?.isAnonymous ? (
                                 <Button fullWidth onClick={() => handleDropDownSelect('logout')}>
                                     Sign Out <VpnKeyOffIcon />
                                 </Button>
+                            ): null}
                             </MenuItem>
                         </Menu>
                     </Box>
@@ -212,11 +213,3 @@ const TopNavbar = () => {
     );
 };
 export default TopNavbar;
-
-// import * as React from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { Icon, AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
-// import MenuIcon from '@mui/icons-material/Menu';
-// import LockPersonIcon from '@mui/icons-material/LockPerson';
-// import Link from 'next/link'
-// import { useRouter } from 'next/router';

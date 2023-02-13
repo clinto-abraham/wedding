@@ -15,5 +15,3 @@ export function useAuth() {
 
     return currentUser;
 }
-
-// import { useState, useEffect } from "react"

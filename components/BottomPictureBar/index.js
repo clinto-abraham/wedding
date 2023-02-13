@@ -92,6 +92,7 @@ export const DeleteButtonSweep = ({ pic, type, folder }) => {
         </IconButton>
     )
 }
+
 const BottomPictureBar = ({ pic, type, folder }) => {
     const userInfo = useAuth();
     const allowedDeleteUser = (userInfo?.email === ('clinto92@gmail.com' || 'chippynt@gmail.com')) && !userInfo?.isAnonymous
@@ -99,7 +100,7 @@ const BottomPictureBar = ({ pic, type, folder }) => {
         <>
             {(allowedDeleteUser && folder === 'display')
                 ? (<DeleteButtonSweep pic={pic} type={type} folder={folder} />)
-                : (allowedDeleteUser && folder === 'display')
+                : (allowedDeleteUser && folder === 'images')
                     ? (<ImageListItemBar
                         title={'Delete one by one'}
                         subtitle={pic.slice(89, 89 + type.length)}

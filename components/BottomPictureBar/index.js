@@ -42,7 +42,7 @@ const AllowedPictureBar = ({ pic }) => {
     )
 }
 
-export const DeleteButtonSweep = ({ pic, type }) => {
+export const DeleteButtonSweep = ({ pic, type, folder }) => {
     const { enqueueSnackbar } = useSnackbar();
     const storage = getStorage();
     const dispatch = useDispatch()
@@ -50,21 +50,23 @@ export const DeleteButtonSweep = ({ pic, type }) => {
     const urlLength = 92 + type.length
 
     const deleteGlobal = (uniqueID) => {
-        const tempArray = uploads[type]
-        tempArray.map((url, index) => {
-            if (url.search(uniqueID) > 0) {
-                const deletedURL = uploads[type][index]
-                const toBeDeletedIndex = uploads[type].indexOf(deletedURL)
-                dispatch(registerDelete({
-                    type,
-                    index: toBeDeletedIndex
-                }))
-            }
-        })
+        if (folder === 'images') {
+            const tempArray = uploads[type]
+            tempArray.map((url, index) => {
+                if (url.search(uniqueID) > 0) {
+                    const deletedURL = uploads[type][index]
+                    const toBeDeletedIndex = uploads[type].indexOf(deletedURL)
+                    dispatch(registerDelete({
+                        type,
+                        index: toBeDeletedIndex
+                    }))
+                }
+            })
+        }
     }
 
     const handleDelete = (id) => {
-        const folderRef = ref(storage, `images/${type}/${id}`);
+        const folderRef = ref(storage, `${folder}/${type}/${id}`);
         deleteObject(folderRef).then(() => {
             deleteGlobal(id)
             enqueueSnackbar('File deleted successfully!', { variant: 'warning' });
@@ -74,32 +76,40 @@ export const DeleteButtonSweep = ({ pic, type }) => {
     }
     return (
         <IconButton
-            sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-            aria-label={`Info about pics of ${pic.slice(89, 89 + type.length)}`}
-            onClick={() => handleDelete(pic.slice(urlLength, urlLength + 10))}
+            sx={{ color: 'white' }}
+            aria-label={`Info about pics of ${pic?.slice(89, 89 + type.length)}`}
+            onClick={() => {
+                if (folder === 'images') {
+                    handleDelete(pic.slice(urlLength, urlLength + 10))
+                }
+                if (folder === 'display') {
+                    handleDelete(pic.slice(urlLength + 1, urlLength + 11))
+                }
+            }
+            }
         >
             <DeleteSweepIcon />
         </IconButton>
     )
 }
-const BottomPictureBar = ({ pic, type }) => {
+const BottomPictureBar = ({ pic, type, folder }) => {
     const userInfo = useAuth();
     const allowedDeleteUser = (userInfo?.email === ('clinto92@gmail.com' || 'chippynt@gmail.com')) && !userInfo?.isAnonymous
     return (
         <>
-            {allowedDeleteUser ? (
-                <ImageListItemBar
-                    title={'Delete one by one'}
-                    subtitle={pic.slice(89, 89 + type.length)}
-                    actionIcon={
-                        <DeleteButtonSweep pic={pic} type={type} />
-                    }
-                />
-            ) : (<AllowedPictureBar pic={pic} />)}
+            {(allowedDeleteUser && folder === 'display')
+                ? (<DeleteButtonSweep pic={pic} type={type} folder={folder} />)
+                : (allowedDeleteUser && folder === 'display')
+                    ? (<ImageListItemBar
+                        title={'Delete one by one'}
+                        subtitle={pic.slice(89, 89 + type.length)}
+                        actionIcon={
+                            <DeleteButtonSweep pic={pic} type={type} folder={folder} />
+                        }
+                    />)
+                    : (<AllowedPictureBar pic={pic} />)}
         </>
     )
 }
-
-
 
 export default BottomPictureBar

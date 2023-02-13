@@ -37,7 +37,7 @@ export default function PostWedding() {
                                     loading="lazy"
                                     key={index}
                                 />
-                                <BottomPictureBar pic={pic} type={type} />
+                                <BottomPictureBar pic={pic} type={type} folder='images' />
                             </ImageListItem>
                         ))}
                     </ImageList>

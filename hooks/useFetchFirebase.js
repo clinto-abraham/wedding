@@ -50,23 +50,19 @@ const useFetchFirebase = ({ type, register, folder }) => {
         if (isError) {
             enqueueSnackbar(`ERROR FOR ${type.toUpperCase()} : ${error} `, { variant: 'error' });
         }
-        if (status) {
-            enqueueSnackbar(`STATUS : ${status.toUpperCase()} FOR ${type.toUpperCase()}`, { variant: 'info' });
-        }
+        // if (status) {
+        //     enqueueSnackbar(`STATUS : ${status.toUpperCase()} FOR ${type.toUpperCase()}`, { variant: 'info' });
+        // }
         if (isSuccess) {
             if (reduxTool[type].length > 0) {
                 enqueueSnackbar('Successfully loaded data. Please enjoy the photos!', { variant: 'success' });
             }
             if (data.length === 0 && status === 'success') {
-                if (timeout) {
-                    setTimeout(() => {
-                        enqueueSnackbar('There are no photos in this gallery, please navigate to another page!', { variant: 'error' });
-                    }, 2000)
-                }
+                enqueueSnackbar(`No photos in this ${type.toUpperCase()} category!`, { variant: 'error' });
+    
             }
             return () => timeout = false;
         }
-
     }, [isError, isSuccess, status, reduxTool[type].length])
 
     return {

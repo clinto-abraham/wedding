@@ -1,25 +1,30 @@
+import { registerPathname } from '@/redux/utilsSlice'
 import {
+    useEffect,
     useRouter,
-    useSelector,
+    useSelector, useDispatch,
     IconButton, Stack,
-    ArrowForwardIosIcon, ArrowBackIosNewIcon
+    ArrowForwardIosIcon, ArrowBackIosNewIcon,
 } from '@/Utils/export'
 
 export const NavigateMe = () => {
     const { photoTilesTypes } = useSelector(state => state.uploads)
+    const { pathname } = useSelector(state => state.utils)
     const router = useRouter()
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        if (router?.pathname) dispatch(registerPathname(router?.pathname))
+    }, [router?.pathname])
+
     const handleNavigation = (dir) => {
         if (dir === 'back') {
             router.back()
         }
         if (dir === 'next') {
             const nextIndex = photoTilesTypes.indexOf(router.pathname.slice(1)) + 1
-            if (nextIndex) {
-                const nextURL = photoTilesTypes[nextIndex]
-                router.push(nextURL)
-            } else {
-                router.push('/')
-            }
+            const nextURL = photoTilesTypes[nextIndex]
+            router.push(nextURL)
         }
     }
     return (<>
@@ -34,8 +39,10 @@ export const NavigateMe = () => {
                 onClick={() => handleNavigation('back')}
                 aria-label="Previous Page"
                 component="label"
+                size='large'
+                disabled={pathname === '/'}
             >
-                <ArrowBackIosNewIcon />
+                <ArrowBackIosNewIcon fontSize='large' />
             </IconButton>
         </Stack>
         <Stack
@@ -49,43 +56,14 @@ export const NavigateMe = () => {
                 onClick={() => handleNavigation('next')}
                 aria-label="Next Page"
                 component="label"
+                size='large'
+                disabled={pathname === '/post-wedding'}
             >
-                <ArrowForwardIosIcon />
+                <ArrowForwardIosIcon fontSize='large' />
             </IconButton>
         </Stack>
     </>
     )
 }
 
-
 export default NavigateMe
-
-// import NextPlanIcon from '@mui/icons-material/NextPlan';
-// import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-// import HomeIcon from '@mui/icons-material/Home';
-// import UndoIcon from '@mui/icons-material/Undo';
-// import RedoIcon from '@mui/icons-material/Redo';
-// export const GoHome = () => {
-//     const router = useRouter()
-//     const handleHome = () => {
-//         router.push('/')
-//     }
-//     return (
-//         <Stack
-//             direction="column"
-//             justifyContent="flex-end"
-//             alignItems="center"
-//             spacing={1}
-//         >
-//             <IconButton
-//                 sx={{ opacity: '0.5', position: 'fixed', zIndex: '1050', color: 'white' }}
-//                 onClick={handleHome}
-//                 color="primary"
-//                 aria-label="upload picture"
-//                 component="label"
-//             >
-//                 <HomeIcon />
-//             </IconButton>
-//         </Stack>
-//     )
-// }

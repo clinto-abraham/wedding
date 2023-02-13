@@ -1,17 +1,17 @@
 import useFetchFirebase from '@/hooks/useFetchFirebase';
+import { registerSelected } from '@/redux/utilsSlice';
 import {
     Link,
     useState,
     useSelector,
     styled, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, IconButton, Typography, Grid,
     FavoriteIcon, ShareIcon, ExpandMoreIcon, MoreVertIcon, Box,
+    WhatsappShareButton,
+    useDispatch,
 } from '@/Utils/export'
 import BottomPictureBar from '../BottomPictureBar';
 import { DisplaySkeleton } from '../Skeletons/Tiles';
-import {
-  WhatsappShareButton,
-  WhatsappIcon,
-} from 'next-share'
+
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -26,6 +26,7 @@ const ExpandMore = styled((props) => {
 
 const PhotoTilesNavbar = props => {
     const { type, register, intro, family, edu, date } = props;
+    const dispatch = useDispatch()
     const refactoredType = type.slice(0, -7).replace('-', '')
     const { isLoading, isInitialLoading } = useFetchFirebase({
         type: refactoredType,
@@ -34,11 +35,11 @@ const PhotoTilesNavbar = props => {
     })
     const uploads = useSelector(state => state.uploads)
     const [expanded, setExpanded] = useState(false);
+    const { selected } = useSelector(state => state.utils)
     const handleExpandClick = () => setExpanded(!expanded)
     const refactoredTitle = type.slice(0, -7)
     const refactoredProps = type.replace('-', '')
     const srcURL = uploads[refactoredProps][0]
-console.log(refactoredTitle, 'refactoredTitle')
     return (
         <Grid item xs={12} sm={12} xl={6} md={6} lg={6}>
             {(isInitialLoading || isLoading) ?
@@ -78,7 +79,7 @@ console.log(refactoredTitle, 'refactoredTitle')
 
                         </CardContent>
                         <CardActions disableSpacing>
-                            <IconButton aria-label='add to favorites' sx={{ color: 'white' }}>
+                            <IconButton aria-label='add to favorites' onClick={() => dispatch(registerSelected(!selected))} sx={{ color: selected ? 'red' : 'white' }}>
                                 <FavoriteIcon />
                             </IconButton>
                             <IconButton aria-label='share' sx={{ color: 'white' }}>

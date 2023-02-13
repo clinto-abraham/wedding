@@ -33,6 +33,9 @@ export default function Home() {
         <Grid container spacing={2}>
           <YouTubeVideo ID='e-3YiD2Y5Z4' />
         </Grid>
+        <Grid container spacing={2}>
+          <YouTubeVideo ID='e-3YiD2Y5Z4' />
+        </Grid>
       </main>
     </>
   )

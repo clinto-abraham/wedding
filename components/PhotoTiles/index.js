@@ -4,10 +4,14 @@ import {
     useState,
     useSelector,
     styled, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, IconButton, Typography, Grid,
-    FavoriteIcon, ShareIcon, ExpandMoreIcon, MoreVertIcon,
+    FavoriteIcon, ShareIcon, ExpandMoreIcon, MoreVertIcon, Box,
 } from '@/Utils/export'
-// import { DeleteButtonSweep } from '../BottomPictureBar';
+import BottomPictureBar from '../BottomPictureBar';
 import { DisplaySkeleton } from '../Skeletons/Tiles';
+import {
+  WhatsappShareButton,
+  WhatsappIcon,
+} from 'next-share'
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -21,7 +25,7 @@ const ExpandMore = styled((props) => {
 }));
 
 const PhotoTilesNavbar = props => {
-    const { type, register, intro, family, edu } = props;
+    const { type, register, intro, family, edu, date } = props;
     const refactoredType = type.slice(0, -7).replace('-', '')
     const { isLoading, isInitialLoading } = useFetchFirebase({
         type: refactoredType,
@@ -30,14 +34,11 @@ const PhotoTilesNavbar = props => {
     })
     const uploads = useSelector(state => state.uploads)
     const [expanded, setExpanded] = useState(false);
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
-
+    const handleExpandClick = () => setExpanded(!expanded)
     const refactoredTitle = type.slice(0, -7)
     const refactoredProps = type.replace('-', '')
     const srcURL = uploads[refactoredProps][0]
-
+console.log(refactoredTitle, 'refactoredTitle')
     return (
         <Grid item xs={12} sm={12} xl={6} md={6} lg={6}>
             {(isInitialLoading || isLoading) ?
@@ -55,6 +56,7 @@ const PhotoTilesNavbar = props => {
                         <Link
                             href={`/${refactoredTitle.toLowerCase()}`}
                         >
+                          {srcURL ? (
                             <CardMedia
                                 component='img'
                                 height='590px'
@@ -62,21 +64,35 @@ const PhotoTilesNavbar = props => {
                                 image={srcURL}
                                 alt={`Display pic of ${refactoredType}`}
                             />
+                          )
+                        : (<Box sx={{width: 'auto', height: 600 }}>
+                            <Typography variant={'h4'} align='center'>No content here</Typography>
+                            <Typography variant={'h6'} align='center'>Kindly upload into display options</Typography>
+                        </Box>)}  
                         </Link>
                         <CardContent>
                             <Typography variant='body2'>
                                 See highlights of {refactoredTitle} and&nbsp; its photos here.
                             </Typography>
-                            <Typography variant='caption'>September 14, 2016</Typography>
-                            {/* <DeleteButtonSweep pic={srcURL[0]} type={type} /> */}
+                            <Typography variant='caption'>{date}</Typography>
+
                         </CardContent>
                         <CardActions disableSpacing>
                             <IconButton aria-label='add to favorites' sx={{ color: 'white' }}>
                                 <FavoriteIcon />
                             </IconButton>
                             <IconButton aria-label='share' sx={{ color: 'white' }}>
-                                <ShareIcon />
+                                <WhatsappShareButton
+                                    url={`https://wedding-days.vercel.app/${refactoredTitle}`}
+                                    title={`Share the ${refactoredTitle.toUpperCase()} URL to any whatsapp contact!`}
+                                    separator=":: "
+                                >
+                                    <ShareIcon />
+                                </WhatsappShareButton>
+                                
                             </IconButton>
+                            <BottomPictureBar pic={srcURL} type={refactoredType} folder='display' />
+
                             <ExpandMore
                                 expand={expanded}
                                 onClick={handleExpandClick}
@@ -108,71 +124,3 @@ const PhotoTilesNavbar = props => {
 }
 
 export default PhotoTilesNavbar;
-
-
-// return (
-//     <Grid item xs={12} sm={12} xl={6} md={6} lg={6}>
-//         {(isInitialLoading || isLoading) ?
-//             (<DisplaySkeleton />) :
-//             (
-//                 <Card sx={{ color: 'white', background: 'transparent', margin: '0.1rem' }}>
-//                     <CardHeader
-//                         action={
-//                             <IconButton aria-label='settings' sx={{ color: 'white' }}>
-//                                 <MoreVertIcon />
-//                             </IconButton>
-//                         }
-//                         title={refactoredTitle.toUpperCase()}
-//                     />
-//                     <Link
-//                         href={`/${refactoredTitle.toLowerCase()}`}
-//                     >
-//                         <CardMedia
-//                             component='img'
-//                             height='590px'
-//                             // width='700px'
-//                             image={srcURL}
-//                             alt={`Display pic of ${refactoredType}`}
-//                         />
-//                     </Link>
-//                     <CardContent>
-//                         <Typography variant='body2'>
-//                             See highlights of {refactoredTitle} and&nbsp; its photos here.
-//                         </Typography>
-//                         <Typography variant='caption'>September 14, 2016</Typography>
-//                         {/* <DeleteButtonSweep pic={srcURL[0]} type={type} /> */}
-//                     </CardContent>
-//                     <CardActions disableSpacing>
-//                         <IconButton aria-label='add to favorites' sx={{ color: 'white' }}>
-//                             <FavoriteIcon />
-//                         </IconButton>
-//                         <IconButton aria-label='share' sx={{ color: 'white' }}>
-//                             <ShareIcon />
-//                         </IconButton>
-//                         <ExpandMore
-//                             expand={expanded}
-//                             onClick={handleExpandClick}
-//                             aria-expanded={expanded}
-//                             aria-label='show more'
-//                             sx={{ color: 'white' }}
-//                         >
-//                             <ExpandMoreIcon />
-//                         </ExpandMore>
-//                     </CardActions>
-//                     <Collapse in={expanded} timeout='auto' unmountOnExit>
-//                         <CardContent>
-//                             <Typography paragraph>Introduction</Typography>
-//                             <Typography paragraph>
-//                                 {intro}
-//                             </Typography>
-//                             <Typography paragraph>
-//                                 {family}
-//                             </Typography>
-//                             <Typography paragraph>
-//                                 {edu}
-//                             </Typography>
-//                         </CardContent>
-//                     </Collapse>
-//                 </Card>)}
-//     </Grid>
-// )

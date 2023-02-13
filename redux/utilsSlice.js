@@ -8,7 +8,10 @@ const initialState = {
     render: 0,
     verse: 0,
     progress: 0,
-    page: 1
+    page: 1,
+    pathname: '/',
+    innerWidth: 390,
+    currentYear: new Date().getFullYear(),
 }
 
 export const utilsSlice = createSlice({
@@ -39,9 +42,12 @@ export const utilsSlice = createSlice({
         registerPage: (state, action) => {
             state.page = action.payload;
         },
+        registerPathname: (state, action) => {
+            state.pathname = action.payload;
+        },
     }
 })
 
-export const { registerSeconds, registerPushURL, registerColor, registerSelected, registerRendering, registerVerse, registerProgress, registerPage } = utilsSlice.actions
+export const { registerSeconds, registerPushURL, registerColor, registerSelected, registerRendering, registerVerse, registerProgress, registerPage, registerPathname } = utilsSlice.actions
 
 export default utilsSlice.reducer;

@@ -25,10 +25,10 @@ export default function Home() {
           <Logo className={'thirteen'} />
         </div>
         <Grid container spacing={2}>
-          <PhotoTilesNavbar type='pre-WeddingDisplay' register={registerDisplayPreWedding} intro={clinto} family={clintoFamily} edu={clintoEdu} />
-          <PhotoTilesNavbar type='engagementDisplay' register={registerDisplayEngagement} intro={chippy} family={chippyFamily} edu={chippyEdu} />
-          <PhotoTilesNavbar type='marriageDisplay' register={registerDisplayMarriage} intro={chippy} family={chippyFamily} edu={chippyEdu} />
-          <PhotoTilesNavbar type='post-WeddingDisplay' register={registerDisplayPostWedding} intro={clinto} family={clintoFamily} edu={clintoEdu} />
+          <PhotoTilesNavbar type='pre-WeddingDisplay' register={registerDisplayPreWedding} intro={clinto} family={clintoFamily} edu={clintoEdu} date='May 21, 2022' />
+          <PhotoTilesNavbar type='engagementDisplay' register={registerDisplayEngagement} intro={chippy} family={chippyFamily} edu={chippyEdu} date='May 22, 2022' />
+          <PhotoTilesNavbar type='marriageDisplay' register={registerDisplayMarriage} intro={chippy} family={chippyFamily} edu={chippyEdu} date='May 25, 2022' />
+          <PhotoTilesNavbar type='post-WeddingDisplay' register={registerDisplayPostWedding} intro={clinto} family={clintoFamily} edu={clintoEdu} date='May 26, 2022 - July 3, 2022' />
         </Grid>
         <Grid container spacing={2}>
           <YouTubeVideo ID='e-3YiD2Y5Z4' />

@@ -87,6 +87,11 @@ import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import LayersIcon from '@mui/icons-material/Layers';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import CommentIcon from '@mui/icons-material/Comment';
+import YouTube from "react-youtube";
+import ZoomOutIcon from '@mui/icons-material/ZoomOut';
+import PhotoSizeSelectSmallIcon from '@mui/icons-material/PhotoSizeSelectSmall';
+import ZoomInIcon from '@mui/icons-material/ZoomIn';
+import PhotoSizeSelectLargeIcon from '@mui/icons-material/PhotoSizeSelectLarge';
 import PropTypes from 'prop-types';
 // import { onAuthStateChanged } from "firebase/auth";
 
@@ -100,7 +105,8 @@ export {
     styled,
     red,
     v4,
-    ReplayIcon, FormatQuoteIcon, PhoneAndroidIcon, AttachEmailIcon, MailLockIcon, ExpandMoreIcon, MoreVertIcon, FavoriteIcon, ShareIcon, RestoreIcon, LocationOnIcon, LockPersonIcon, MenuIcon, CloudUploadIcon, ArrowForwardIosIcon, ArrowBackIosNewIcon, DeleteSweepIcon, VpnKeyOffIcon, GitHubIcon, LinkedInIcon, TwitterIcon, LightbulbIcon, GavelIcon, PolicyIcon, StarsIcon, AccountTreeIcon, LayersIcon, ThumbUpIcon, CommentIcon,
+    ReplayIcon, FormatQuoteIcon, PhoneAndroidIcon, AttachEmailIcon, MailLockIcon, ExpandMoreIcon, MoreVertIcon, FavoriteIcon, ShareIcon, RestoreIcon, LocationOnIcon, LockPersonIcon, MenuIcon, CloudUploadIcon, ArrowForwardIosIcon, ArrowBackIosNewIcon, DeleteSweepIcon, VpnKeyOffIcon, GitHubIcon, LinkedInIcon, TwitterIcon, LightbulbIcon, GavelIcon, PolicyIcon, StarsIcon, AccountTreeIcon, LayersIcon, ThumbUpIcon, CommentIcon,PhotoSizeSelectLargeIcon,ZoomInIcon,PhotoSizeSelectSmallIcon,ZoomOutIcon,
+    YouTube,
     Button, Grid, Typography, ImageList, ImageListItem, Container, CircularProgress, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, IconButton, Paper, BottomNavigationAction, BottomNavigation, AppBar, Toolbar, Menu, Tooltip, MenuItem, Stack, Skeleton, ImageListItemBar, Chip, Checkbox, Select, ListItemText, FormControl, InputLabel, OutlinedInput, LinearProgress,
     Icon,
     useDispatch,

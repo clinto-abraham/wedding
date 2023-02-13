@@ -179,7 +179,7 @@ function FirebaseUpload() {
                             {names.map((name) => (
                                 <MenuItem key={name} value={name}>
                                     <Checkbox checked={categoryType.indexOf(name) > -1} />
-                                    <ListItemText primary={name.toUpperCase()} />
+                                    <ListItemText primary={name} />
                                 </MenuItem>
                             ))}
                         </Select>

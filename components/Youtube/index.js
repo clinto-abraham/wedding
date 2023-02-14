@@ -1,11 +1,10 @@
 import {
-    Grid, Button, 
+    Grid, 
     useSelector, useDispatch,
-    PhotoSizeSelectLargeIcon,ZoomInIcon,PhotoSizeSelectSmallIcon,ZoomOutIcon,
     YouTube,
-    // useEffect,
 } from '@/Utils/export'
 import { registerOpts } from '@/redux/youTubeSlice';
+import ZoomControl from '../Zoom';
 
 const YouTubeVideo = ({ ID }) => {
     const dispatch = useDispatch();
@@ -49,18 +48,10 @@ const YouTubeVideo = ({ ID }) => {
                     onReady={handleOnReady}
                 />
             </Grid>
-            <Grid item xs={6} sm={6} md={6} lg={6} align='right'>
-                <Button variant='contained' onClick={handleDecrease}>
-                    <PhotoSizeSelectSmallIcon />  
-                    <ZoomOutIcon /> 
-                </Button>
-            </Grid>
-            <Grid item xs={6} sm={6} md={6} lg={6} align='left'>
-                <Button variant='contained' onClick={handleIncrease}>
-                    <PhotoSizeSelectLargeIcon /> 
-                    <ZoomInIcon />
-                </Button>
-            </Grid>
+            <ZoomControl 
+                handleDecrease={handleDecrease} 
+                handleIncrease={handleIncrease} 
+            />
         </Grid>
     )
 }

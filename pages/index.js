@@ -1,6 +1,8 @@
 import {
   useSelector,
-  Grid,
+  Grid, Button,
+  AccountTreeIcon,
+  useRouter,
 } from '@/Utils/export'
 import styles from '@/styles/Home.module.css'
 import { Header } from '@/components/Header'
@@ -13,25 +15,29 @@ import {
 import Logo from '@/components/Logo';
 import PhotoTilesNavbar from '@/components/PhotoTiles';
 import YouTubeVideo from '@/components/Youtube';
-// 'https://youtu.be/e-3YiD2Y5Z4'
 
 export default function Home() {
-  const { chippy, chippyFamily, chippyEdu, clinto, clintoFamily, clintoEdu } = useSelector(state => state.story)
+  const { chippy, chippyFamily, chippyEdu, clinto, clintoFamily, clintoEdu } = useSelector(state => state.story);
+  const router = useRouter()
   return (
     <>
       <Header />
       <main>
         <div className={styles.center}>
+          <Button 
+            variant='filled'
+            fullWidth
+            onClick={() => router.push('family-tree')}
+        >
           <Logo className={'thirteen'} />
+          <AccountTreeIcon /> See Family Tree
+          </Button>
         </div>
         <Grid container spacing={2}>
           <PhotoTilesNavbar type='pre-WeddingDisplay' register={registerDisplayPreWedding} intro={clinto} family={clintoFamily} edu={clintoEdu} date='May 21, 2022' />
           <PhotoTilesNavbar type='engagementDisplay' register={registerDisplayEngagement} intro={chippy} family={chippyFamily} edu={chippyEdu} date='May 22, 2022' />
           <PhotoTilesNavbar type='marriageDisplay' register={registerDisplayMarriage} intro={chippy} family={chippyFamily} edu={chippyEdu} date='May 25, 2022' />
           <PhotoTilesNavbar type='post-WeddingDisplay' register={registerDisplayPostWedding} intro={clinto} family={clintoFamily} edu={clintoEdu} date='May 26, 2022 - July 3, 2022' />
-        </Grid>
-        <Grid container spacing={2}>
-          <YouTubeVideo ID='e-3YiD2Y5Z4' />
         </Grid>
         <Grid container spacing={2}>
           <YouTubeVideo ID='e-3YiD2Y5Z4' />

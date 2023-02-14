@@ -3,7 +3,7 @@ import {
     useRouter,
     useDispatch, useSelector,
     Box, BottomNavigation, BottomNavigationAction, Grid, Typography, Button,
-    FavoriteIcon, RestoreIcon, LocationOnIcon, GitHubIcon, LinkedInIcon, TwitterIcon, LightbulbIcon, GavelIcon, PolicyIcon, StarsIcon, AccountTreeIcon, LayersIcon, ThumbUpIcon, CommentIcon,
+    FavoriteIcon, RestoreIcon, LocationOnIcon, GitHubIcon, LinkedInIcon, TwitterIcon, LightbulbIcon, GavelIcon, PolicyIcon, StarsIcon, AccountTreeIcon, LayersIcon, ThumbUpIcon, CommentIcon, HomeIcon,
 } from '@/Utils/export'
 import { registerSelected } from '@/redux/utilsSlice';
 
@@ -18,6 +18,8 @@ const Icons = [
     <LightbulbIcon />,
     <CommentIcon />,
     <ThumbUpIcon />,
+    <AccountTreeIcon />,
+    <HomeIcon />,
 ]
 
 const FooterItemsComponent = (props) => {

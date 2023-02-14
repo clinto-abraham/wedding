@@ -64,6 +64,19 @@ const initialState = {
             target: '_blank',
             rel: 'noopener noreferrer',
         },
+        {
+            url: '/family-tree',
+            name: 'Family Tree',
+            target: '_blank',
+            rel: 'noopener noreferrer',
+        },
+        {
+            url: '/',
+            name: 'Home',
+            target: '_blank',
+            rel: 'noopener noreferrer',
+        },
+        
     ]
 }
 

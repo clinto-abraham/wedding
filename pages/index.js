@@ -40,7 +40,7 @@ export default function Home() {
           <PhotoTilesNavbar type='post-WeddingDisplay' register={registerDisplayPostWedding} intro={clinto} family={clintoFamily} edu={clintoEdu} date='May 26, 2022 - July 3, 2022' />
         </Grid>
         <Grid container spacing={2}>
-          <YouTubeVideo ID='e-3YiD2Y5Z4' />
+          <YouTubeVideo ID='OzDENZ8Lpb4' />
         </Grid>
       </main>
     </>

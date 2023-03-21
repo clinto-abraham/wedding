@@ -45,7 +45,7 @@ function FirebaseUpload() {
     const { enqueueSnackbar } = useSnackbar()
     const { progress } = useSelector(state => state.utils)
     const handleUpload = (type) => {
-        const folderDir = type.replace(' Display', '').trim()
+        const folderDir = type.replace(' DISPLAY', '').trim()
         const upload = (storageDir) => {
             if (file?.name) {
                 console.log(file?.name, 'file?.name')
@@ -102,10 +102,10 @@ function FirebaseUpload() {
                 });
             }
         }
-        if (type.search('Display') > 0) {
+        if (type.search('DISPLAY') > 0) {
             upload('display')
         }
-        if (type.search('Display') < 1) {
+        if (type.search('DISPLAY') < 1) {
             upload('images')
         }
     };

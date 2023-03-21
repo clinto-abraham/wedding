@@ -45,10 +45,8 @@ function FirebaseUpload() {
     const { enqueueSnackbar } = useSnackbar()
     const { progress } = useSelector(state => state.utils)
     const handleUpload = (type) => {
-        const folderDir = type.replace(' DISPLAY', '').trim()
-        const upload = (storageDir) => {
+        const upload = (storageDir,folderDir) => {
             if (file?.name) {
-                console.log(file?.name, 'file?.name')
                 const storageRef = ref(storage, `${storageDir}/${folderDir}/${v4().slice(0, 10)}`);
                 const uploadTask = uploadBytesResumable(storageRef, file, metadata);
 
@@ -103,10 +101,10 @@ function FirebaseUpload() {
             }
         }
         if (type.search('DISPLAY') > 0) {
-            upload('display')
+            upload('display', type.slice(0,type.search('DISPLAY')-1))
         }
         if (type.search('DISPLAY') < 1) {
-            upload('images')
+            upload('images',type)
         }
     };
 
@@ -217,118 +215,3 @@ function FirebaseUpload() {
 
 const EnhancedFirebaseUpload = () => UploadPageHOC(FirebaseUpload)
 export default EnhancedFirebaseUpload;
-
-
-//
-
-
-// import OutlinedInput from '@mui/material/OutlinedInput';
-// import InputLabel from '@mui/material/InputLabel';
-// import MenuItem from '@mui/material/MenuItem';
-// import FormControl from '@mui/material/FormControl';
-// import ListItemText from '@mui/material/ListItemText';
-// import Select from '@mui/material/Select';
-// import Checkbox from '@mui/material/Checkbox';
-// import Chip from '@mui/material/Chip';
-
-// const displayTypes = ['engagement Display', 'preWedding Display', 'marriage Display', 'postWedding Display']
-// const photoTypes = ['engagement', 'preWedding', 'marriage', 'postWedding']
-
-
-
-// const handleUploadDisplay = (type) => {
-//     const folderDir = type.slice(0, -8).replace('-', '')
-//     console.log(file?.name, 'file?.name', folderDir, 'folderDir')
-//     if (file?.name) {
-//         const imageRef = ref(storage, `display/${folderDir}/${v4().slice(0, 10)}`);
-//         uploadBytes(imageRef, file).then((snapshot) => {
-//             getDownloadURL(snapshot.ref).then((url) => {
-//                 dispatch(registerImageUploadBase(url))
-//                 setFile(null)
-//             });
-//         });
-//     }
-// };
-
-
-// {
-//     photoTypes.map((type, i) => (
-//         <Button
-//             key={i + type}
-//             variant='contained'
-//             sx={{ minWidth: '16rem', padding: '1rem', margin: '2rem 1.2rem' }}
-//             onClick={() => handleUpload(type)}
-//         >
-//             <CloudUploadIcon sx={{ margin: '0rem 1rem' }} />
-//             {type}
-//         </Button>
-//     ))
-// }
-
-
-
-{/* <Stack spacing={4} direction='row' sx={{ margin: '7rem 0rem', display: 'block' }}>
-    {displayTypes.map((type, i) => (
-        <Button
-            key={i + type}
-            variant='contained'
-            sx={{ minWidth: '16rem', padding: '1rem', margin: '2rem 1.2rem' }}
-            onClick={() => handleUploadDisplay(type.trim())}
-        >
-            <CloudUploadIcon sx={{ margin: '0rem 1rem' }} />
-            {type}
-        </Button>
-    ))}
-</Stack> */}
-
-
-
-
-
-
-
-
-    // Upload file and metadata to the object 'images/mountains.jpg'
-    // const storageRef = ref(storage, 'images/' + file.name);
-    // const uploadTask = uploadBytesResumable(storageRef, file, metadata);
-
-    // Listen for state changes, errors, and completion of the upload.
-    // uploadTask.on('state_changed',
-    //     (snapshot) => {
-    //         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-    //         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    //         console.log('Upload is ' + progress + '% done');
-    //         switch (snapshot.state) {
-    //             case 'paused':
-    //                 console.log('Upload is paused');
-    //                 break;
-    //             case 'running':
-    //                 console.log('Upload is running');
-    //                 break;
-    //         }
-    //     },
-    //     (error) => {
-    //         // A full list of error codes is available at
-    //         // https://firebase.google.com/docs/storage/web/handle-errors
-    //         switch (error.code) {
-    //             case 'storage/unauthorized':
-    //                 // User doesn't have permission to access the object
-    //                 break;
-    //             case 'storage/canceled':
-    //                 // User canceled the upload
-    //                 break;
-
-    //             // ...
-
-    //             case 'storage/unknown':
-    //                 // Unknown error occurred, inspect error.serverResponse
-    //                 break;
-    //         }
-    //     },
-    //     () => {
-    //         // Upload completed successfully, now we can get the download URL
-    //         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-    //             console.log('File available at', downloadURL);
-    //         });
-    //     }
-    // );

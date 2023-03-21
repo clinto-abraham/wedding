@@ -21,7 +21,7 @@ const useFetchFirebase = ({ type, register, folder }) => {
 
     const { data, isLoading, isError, error, isSuccess, status, isInitialLoading } = useQuery({
         queryKey: [type],
-        queryFn: () => fetchPhotos(imageRefs(type)),
+        queryFn: () => fetchPhotos(imageRefs(type.toUpperCase())),
         cacheTime: 6000000,
         staleTime: 6000000,
         retryOnMount: false
